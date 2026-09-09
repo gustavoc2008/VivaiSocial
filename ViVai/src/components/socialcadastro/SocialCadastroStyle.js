@@ -21,6 +21,7 @@ export const SocialCadastroStyle = StyleSheet.create({
 
     boxText: {
         alignItems: "center",
+        marginTop: -35
     },
 
     text: {

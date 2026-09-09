@@ -25,11 +25,12 @@ export const SocialForm = () => {
             >
 
                 <View>
-
-                    <Image
-                        source={require("../../../assets/voltar.png")}
-                        style={SocialFormStyle.img}
-                    />
+                    <TouchableOpacity onPress={() => router.push("/vivai")}>
+                        <Image
+                            source={require("../../../assets/voltar.png")}
+                            style={SocialFormStyle.img}
+                        />
+                    </TouchableOpacity>
 
                     <View style={SocialFormStyle.boxText}>
 
@@ -115,6 +116,7 @@ export const SocialForm = () => {
 
                         <TouchableOpacity
                             style={SocialFormStyle.buttonStart}
+                            onPress={() => router.push("/vivai/inicio")}
                         >
                             <Text style={SocialFormStyle.buttonStartText}>
                                 Entrar
@@ -167,7 +169,7 @@ export const SocialForm = () => {
                         </Text>
 
                         <TouchableOpacity
-                            onPress={() => router.push("/vivai/cadastro") }
+                            onPress={() => router.push("/vivai/cadastro")}
                         >
                             <Text style={SocialFormStyle.textC}>
                                 Criar Conta
@@ -176,7 +178,7 @@ export const SocialForm = () => {
 
                     </View>
 
-                </View>
+                </View> 
 
             </ScrollView>
 
