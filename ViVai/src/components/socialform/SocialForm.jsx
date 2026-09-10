@@ -25,7 +25,7 @@ export const SocialForm = () => {
             >
 
                 <View>
-                    <TouchableOpacity onPress={() => router.push("/vivai")}>
+                    <TouchableOpacity onPress={() => router.back()}>
                         <Image
                             source={require("../../../assets/voltar.png")}
                             style={SocialFormStyle.img}

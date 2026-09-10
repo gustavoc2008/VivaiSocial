@@ -33,7 +33,10 @@ export const SocialHome = () => {
                 </View>
 
                 <View style={SocialHomeStyle.bottomContainer}>
-                    <TouchableOpacity style={SocialHomeStyle.buttonStart}>
+                    <TouchableOpacity
+                        style={SocialHomeStyle.buttonStart}
+                        onPress={() => router.push('/vivai/cadastro')}
+                    >
                         <Text style={SocialHomeStyle.buttonStartText}>Começar agora</Text>
                     </TouchableOpacity>
 

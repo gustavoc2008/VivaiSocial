@@ -4,7 +4,7 @@ export const SocialFormStyle = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: "#262626",
+        backgroundColor: "#171717",
     },
 
     contentContainer: {
