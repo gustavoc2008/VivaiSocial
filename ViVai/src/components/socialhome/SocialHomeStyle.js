@@ -46,7 +46,7 @@ export const SocialHomeStyle = StyleSheet.create({
     },
 
     titleVai: {
-        color: '#E07C24',
+        color: '#D97706',
     },
 
     description: {
@@ -66,7 +66,7 @@ export const SocialHomeStyle = StyleSheet.create({
     buttonStart: {
         width: '100%',
         height: 55,
-        backgroundColor: '#E07C24',
+        backgroundColor: '#D97706',
         justifyContent: 'center',
         borderRadius: 10,
         alignItems: 'center',

@@ -14,9 +14,8 @@ export const SocialCadastroStyle = StyleSheet.create({
     img: {
         width: 35,
         height: 35,
-        left: 15,
         tintColor: "white",
-        marginTop: 30,
+        margin: 20
     },
 
     boxText: {
@@ -81,7 +80,7 @@ export const SocialCadastroStyle = StyleSheet.create({
         height: 45,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: "#B1B1B1",
+        borderColor: "#3A3A3A",
         left: 6,
         marginTop: 10,
         paddingHorizontal: 9,

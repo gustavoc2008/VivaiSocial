@@ -7,8 +7,6 @@ export const BottomNavStyle = StyleSheet.create({
         backgroundColor: "#111111",
         borderWidth: 1,
         borderColor: "#333333",
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
 
         flexDirection: "row",
         alignItems: "center",

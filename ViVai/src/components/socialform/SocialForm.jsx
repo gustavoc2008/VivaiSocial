@@ -178,7 +178,7 @@ export const SocialForm = () => {
 
                     </View>
 
-                </View> 
+                </View>
 
             </ScrollView>
 

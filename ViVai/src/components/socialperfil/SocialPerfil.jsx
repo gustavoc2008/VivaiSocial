@@ -1,8 +1,4 @@
+import { ScrollView, View } from "react-native"
 import { BottomNav } from "../bottomnav/BottomNav"
 
 
-export const SocialPerfil = () => {
-    return (
-        <BottomNav/>
-    )
-}

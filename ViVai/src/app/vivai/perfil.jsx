@@ -1,4 +1,4 @@
-import { SocialPerfil } from "../../components/socialperfil/SocialPerfil"
+import { SocialPerfil } from "../../components/socialperfil/ProfileScreen";
 
 
 export default function Perfil() {
