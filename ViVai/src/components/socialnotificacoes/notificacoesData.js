@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 export const notificacoes = [
   { nome: 'João Silva', mensagem: 'curtiu sua publicação.', tempo: 'Há 2 min', tipo: 'curtida', inicial: 'J', cor: '#6f4b35', naoLida: true },
   { nome: 'Maria Oliveira', mensagem: 'comentou sua publicação: “Lindo!”', tempo: 'Há 10 min', tipo: 'comentario', inicial: 'M', cor: '#7c553e', naoLida: true },

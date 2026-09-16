@@ -4,11 +4,57 @@ import { ScrollView } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useRouter } from "expo-router"
 import { TextInput } from "react-native"
+import { useState } from "react"
+import axios from "axios"
 
 
 export const SocialCadastro = () => {
 
     const router = useRouter()
+
+    const [nome, setNome] = useState("")
+    const [usuario, setUsuario] = useState("")
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+    const [foto, setFoto] = useState("")
+    const [mostrarSenha, setMostrarSenha] = useState(false)
+
+
+    const fazerCadastro = async () => {
+        if (
+            nome == "" ||
+            usuario == "" ||
+            email == "" ||
+            senha == ""
+        ) {
+            alert(
+                "Preencha todos os campos!"
+            )
+
+            return
+        }
+
+
+        try {
+            await axios.post("http://localhost:3000/usuarios",
+                {
+                    nome: nome,
+                    usuario: usuario,
+                    email: email,
+                    senha: senha
+                }
+            )
+
+            alert(
+                "Conta criado com sucesso!"
+            )
+
+            router.push("/vivai/login")
+
+        } catch (error) {
+            console.log("Erro ao criar a conta", error);
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -56,6 +102,8 @@ export const SocialCadastro = () => {
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu nome"
                             placeholderTextColor="#8A8A8A"
+                            value={nome}
+                            onChangeText={setNome}
                         />
 
                     </View>
@@ -75,6 +123,8 @@ export const SocialCadastro = () => {
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu nome de usuário"
                             placeholderTextColor="#8A8A8A"
+                            value={usuario}
+                            onChangeText={setUsuario}
                         />
 
                     </View>
@@ -94,6 +144,10 @@ export const SocialCadastro = () => {
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu e-mail"
                             placeholderTextColor="#8A8A8A"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            value={email}
+                            onChangeText={setEmail}
                         />
 
                     </View>
@@ -113,11 +167,14 @@ export const SocialCadastro = () => {
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Crie sua senha"
                             placeholderTextColor="#8A8A8A"
-                            secureTextEntry={true}
+                            secureTextEntry={!mostrarSenha}
+                            value={senha}
+                            onChangeText={setSenha}
                         />
 
                         <TouchableOpacity
                             style={SocialCadastroStyle.eyeButton}
+                            onPress={() => setMostrarSenha(!mostrarSenha)}
                         >
                             <Image
                                 source={require("../../../assets/exibir.png")}
@@ -134,7 +191,7 @@ export const SocialCadastro = () => {
 
                     <TouchableOpacity
                         style={SocialCadastroStyle.buttonStart}
-                        onPress={() => router.push("/vivai/inicio")}
+                        onPress={fazerCadastro}
                     >
                         <Text style={SocialCadastroStyle.buttonStartText}>
                             Criar conta

@@ -10,6 +10,7 @@ import {
 import { BottomNav } from "../bottomnav/BottomNav";
 import { SocialPesquisaStyle } from "./SocialPesquisaStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 export const SocialPesquisa = () => {
 
@@ -58,9 +59,9 @@ export const SocialPesquisa = () => {
 
                     <View style={SocialPesquisaStyle.boxImg}>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push("/vivai/detalhe")}>
                             <Image
-                                source={require("../../../assets/montanha.avif")}
+                                source={require("../../../assets/cafe.jpg")}
                                 style={SocialPesquisaStyle.imgAlta}
                             />
                         </TouchableOpacity>
@@ -74,7 +75,7 @@ export const SocialPesquisa = () => {
 
                         <TouchableOpacity>
                             <Image
-                                source={require("../../../assets/praia.avif")}
+                                source={require("../../../assets/airbnb.jpg")}
                                 style={SocialPesquisaStyle.imgAlta}
                             />
                         </TouchableOpacity>

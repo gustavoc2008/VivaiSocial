@@ -1,126 +1,116 @@
 import { StyleSheet } from "react-native"
 
-export const NotificacoesStyle = StyleSheet.create({
+const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: "#171717",
+        backgroundColor: "#17181b",
     },
 
     header: {
-        height: 55,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 20,
+        paddingHorizontal: 18,
+        paddingTop: 12,
+        paddingBottom: 8,
     },
 
-    title: {
-        fontSize: 22,
+    titulo: {
+        color: "#f3f5f5",
+        fontSize: 26,
+        fontWeight: "700",
+        letterSpacing: -0.4,
+    },
+
+    marcar: {
+        color: "#f28b2d",
+        fontSize: 12,
         fontWeight: "600",
-        color: "#FFFFFF",
+        marginLeft: 12,
     },
 
-    markAll: {
-        fontSize: 13,
-        color: "#D97706",
-        fontWeight: "500",
+    lista: {
+        flex: 1,
     },
 
-    notification: {
-        minHeight: 100,
+    listaContent: {
+        paddingBottom: 8,
+    },
+
+    notificacao: {
+        minHeight: 86,
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: 18,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
     },
 
-    notificationIcon: {
-        width: 35,
-        height: 35,
-        resizeMode: "contain",
+    iconeContainer: {
+        width: 34,
+        height: 34,
+        alignItems: "center",
+        justifyContent: "center",
         marginRight: 10,
     },
 
+    icone: {
+        width: 26,
+        height: 26,
+        resizeMode: "contain",
+        tintColor: "#f28931",
+    },
+
     avatar: {
-        width: 38,
-        height: 38,
-        borderRadius: 100,
-    },
-
-    notificationText: {
-        flex: 1,
-        marginLeft: 12,
-        paddingRight: 8,
-    },
-
-    textNotification: {
-        fontSize: 16,
-        color: "#FFFFFF",
-        lineHeight: 23,
-    },
-
-    name: {
-        fontWeight: "700",
-        color: "#FFFFFF",
-    },
-
-    time: {
-        fontSize: 14,
-        color: "#FFFFFF",
-        opacity: 0.55,
-        marginTop: 2,
-    },
-
-    unread: {
-        width: 12,
-        height: 12,
-        borderRadius: 100,
-        backgroundColor: "#D97706",
-    },
-
-    bottomBar: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: 75,
-        backgroundColor: "#171717",
-        borderTopWidth: 1,
-        borderTopColor: "#333333",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-
-    bottomButton: {
+        width: 42,
+        height: 42,
+        borderRadius: 21,
         alignItems: "center",
         justifyContent: "center",
-        width: 70,
+        marginRight: 12,
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.14)",
     },
 
-    bottomIcon: {
-        width: 25,
-        height: 25,
-        tintColor: "#FFFFFF",
+    avatarTexto: {
+        color: "#ffffff",
+        fontSize: 16,
+        fontWeight: "700",
     },
 
-    activeIcon: {
-        tintColor: "#D97706",
+    conteudo: {
+        flex: 1,
+        justifyContent: "center",
     },
 
-    bottomText: {
-        fontSize: 10,
-        color: "#FFFFFF",
+    mensagem: {
+        color: "#d8d8d8",
+        fontSize: 17,
+        lineHeight: 24,
+        fontWeight: "500",
+    },
+
+    nome: {
+        color: "#f4f4f4",
+        fontWeight: "700",
+    },
+
+    tempo: {
+        color: "#b8b8b8",
+        fontSize: 14,
         marginTop: 4,
-        textAlign: "center",
     },
 
-    activeText: {
-        fontSize: 10,
-        color: "#D97706",
-        marginTop: 4,
-        textAlign: "center",
+    ponto: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: "#f28b2d",
+        marginLeft: 10,
     },
 
 })
+
+export const NotificacoesStyle = styles;
+export default styles;

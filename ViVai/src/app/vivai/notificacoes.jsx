@@ -1,5 +1,5 @@
-import NotificacoesTela from "../../components/socialnotificacoes/notificacoes.jsx";
+import Notificacoes from "../../components/socialnotificacoes/notificacoes.jsx"
 
-export default function Notificacoes() {
-    return <NotificacoesTela />;
+export default function Notificacao() {
+    return <Notificacoes/>
 }

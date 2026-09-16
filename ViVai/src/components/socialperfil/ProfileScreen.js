@@ -26,9 +26,9 @@ export const SocialPerfil = () => {
   const router = useRouter();
 
   const POSTS = [
-    require("../../../assets/montanha.avif"),
+    require("../../../assets/cafe.jpg"),
     require("../../../assets/sol.jpg"),
-    require("../../../assets/praia.avif"),
+    require("../../../assets/cidade.jpg"),
     require("../../../assets/cidade.jpg"),
     require("../../../assets/cafe.jpg"),
     require("../../../assets/airbnb.jpg"),
@@ -49,7 +49,7 @@ export const SocialPerfil = () => {
 
         {/* CAPA */}
         <ImageBackground
-          source={require("../../../assets/montanha.avif")}
+          source={require("../../../assets/airbnb.jpg")}
           style={styles.cover}
         >
 
@@ -70,6 +70,7 @@ export const SocialPerfil = () => {
             {/* TRÊS PONTOS */}
             <TouchableOpacity
               style={styles.topButton}
+              onPress={() => router.push("/vivai/configuracao")}
             >
               <Ionicons
                 name="ellipsis-horizontal"
@@ -93,37 +94,43 @@ export const SocialPerfil = () => {
 
           <View style={styles.statsRow}>
 
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>
-                12
-              </Text>
+            <TouchableOpacity>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>
+                  12
+                </Text>
 
-              <Text style={styles.statLabel}>
-                Publicações
-              </Text>
-            </View>
-
-
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>
-                150
-              </Text>
-
-              <Text style={styles.statLabel}>
-                Seguidores
-              </Text>
-            </View>
+                <Text style={styles.statLabel}>
+                  Publicações
+                </Text>
+              </View>
+            </TouchableOpacity>
 
 
-            <View style={styles.statItem}>
-              <Text style={styles.statNumber}>
-                80
-              </Text>
+            <TouchableOpacity onPress={() => router.push("/vivai/seguidores")}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>
+                  150
+                </Text>
 
-              <Text style={styles.statLabel}>
-                Seguindo
-              </Text>
-            </View>
+                <Text style={styles.statLabel}>
+                  Seguidores
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>
+                  80
+                </Text>
+
+                <Text style={styles.statLabel}>
+                  Seguindo
+                </Text>
+              </View>
+            </TouchableOpacity>
 
           </View>
 

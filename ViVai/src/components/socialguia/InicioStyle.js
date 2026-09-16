@@ -4,30 +4,32 @@ import { StyleSheet } from "react-native";
 export const GuiaStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#171717",
-        paddingHorizontal: 20,
+        backgroundColor: "#17181b",
+        paddingHorizontal: 18,
     },
 
     content: {
-        paddingBottom: 24,
+        paddingBottom: 16,
     },
 
     header: {
-        paddingTop: 20,
-        paddingBottom: 22,
+        paddingTop: 12,
+        paddingBottom: 20,
     },
 
     titulo: {
-        fontSize: 24,
-        fontWeight: "600",
-        color: "#FFFFFF",
+        color: "#f4f5f6",
+        fontSize: 34,
+        fontWeight: "700",
+        letterSpacing: -0.7,
     },
 
     subtitulo: {
-        fontSize: 15,
-        color: "#FFFFFF",
-        opacity: 0.7,
-        marginTop: 5,
+        color: "#d8d8d8",
+        fontSize: 17,
+        lineHeight: 26,
+        marginTop: 6,
+        opacity: 0.85,
     },
 
     boxText: {
@@ -52,14 +54,11 @@ export const GuiaStyle = StyleSheet.create({
     },
 
     item: {
-        width: "100%",
-        minHeight: 70,
-        backgroundColor: "#262626",
-        borderRadius: 12,
-        marginBottom: 12,
-        paddingHorizontal: 15,
+        minHeight: 90,
         flexDirection: "row",
         alignItems: "center",
+        paddingVertical: 8,
+        marginBottom: 2,
     },
 
     itemOpen: {
@@ -67,18 +66,25 @@ export const GuiaStyle = StyleSheet.create({
     },
 
     iconBox: {
-        width: 45,
-        height: 45,
-        borderRadius: 10,
-        backgroundColor: "#333333",
+        width: 56,
+        height: 56,
+        borderRadius: 14,
+        backgroundColor: "#24262a",
+        borderWidth: 1,
+        borderColor: "#3a3d41",
         justifyContent: "center",
         alignItems: "center",
     },
 
-    icon: {
-        width: 24,
-        height: 24,
-        tintColor: "#D97706",
+    icone: {
+        width: 28,
+        height: 28,
+        resizeMode: "contain",
+        tintColor: "#f4f5f6",
+    },
+
+    iconeInicio: {
+        tintColor: "#f28b2d",
     },
 
     topicIcon: {
@@ -89,27 +95,27 @@ export const GuiaStyle = StyleSheet.create({
 
     itemText: {
         flex: 1,
-        marginLeft: 15,
+        marginLeft: 18,
     },
 
     itemTitle: {
-        fontSize: 17,
+        color: "#f2f2f2",
+        fontSize: 19,
         fontWeight: "600",
-        color: "#FFFFFF",
     },
 
     itemDescription: {
-        fontSize: 13,
-        color: "#FFFFFF",
-        opacity: 0.6,
+        color: "#b9b9b9",
+        fontSize: 15,
         marginTop: 4,
     },
 
     arrow: {
-        fontSize: 30,
-        color: "#D97706",
+        color: "#f1f1f1",
+        fontSize: 35,
         fontWeight: "300",
-        marginLeft: 10,
+        marginLeft: 12,
+        lineHeight: 35,
     },
 
     bottomBar: {

@@ -1,4 +1,5 @@
 import {
+    Alert,
     Image,
     ScrollView,
     Text,
@@ -11,10 +12,46 @@ import { SocialFormStyle } from "./SocialFormStyle";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import axios from "axios";
 
 export const SocialForm = () => {
 
     const router = useRouter()
+
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+
+
+    const fazerLogin = async () => {
+
+        if (email.trim() == "" || senha.trim() == "") {
+            alert(
+                "Preencha o e-mail e a senha."
+            )
+
+            return
+        }
+
+        try {
+            const resposta = await axios.get("http://localhost:3000/usuarios")
+
+            const usuario = resposta.data.filter(
+                (item) => (item.email == email || item.usuario == email) && item.senha == senha
+            )
+
+            if (usuario.length > 0) {
+                router.push("/vivai/inicio")
+            } else {
+                Alert.alert(
+                    "Erro",
+                    "E-mail ou Senha incorretos"
+                )
+            }
+        } catch (error) {
+            console.log("Erro ao fazer login");
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -60,6 +97,8 @@ export const SocialForm = () => {
                                 placeholderTextColor="#8A8A8A"
                                 keyboardType="email-address"
                                 autoCapitalize="none"
+                                value={email}
+                                onChangeText={setEmail}
                             />
 
                         </View>
@@ -81,6 +120,8 @@ export const SocialForm = () => {
                                 placeholder="Digite sua senha"
                                 placeholderTextColor="#8A8A8A"
                                 secureTextEntry={true}
+                                value={senha}
+                                onChangeText={setSenha}
                             />
 
                             <TouchableOpacity
@@ -116,7 +157,7 @@ export const SocialForm = () => {
 
                         <TouchableOpacity
                             style={SocialFormStyle.buttonStart}
-                            onPress={() => router.push("/vivai/inicio")}
+                            onPress={fazerLogin}
                         >
                             <Text style={SocialFormStyle.buttonStartText}>
                                 Entrar

@@ -2,6 +2,7 @@
   "expo": {
     "name": "ViVai",
     "slug": "ViVai",
+    "scheme": "vivai",
     "plugins": [
       "expo-router",
       "expo-status-bar"
@@ -10,11 +11,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true
     },
