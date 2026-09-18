@@ -9,21 +9,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
-  Dimensions,
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 import { BottomNav } from "../bottomnav/BottomNav";
 
-const { width } = Dimensions.get("window");
-
-const GRID_SIZE = width / 3;
 
 export const SocialPerfil = () => {
 
   const router = useRouter();
+
 
   const POSTS = [
     require("../../../assets/cafe.jpg"),
@@ -34,68 +32,127 @@ export const SocialPerfil = () => {
     require("../../../assets/airbnb.jpg"),
   ];
 
+
+  // ABRIR CÂMERA
+  const abrirCamera = async () => {
+
+    const permissao =
+      await ImagePicker.requestCameraPermissionsAsync();
+
+
+    if (!permissao.granted) {
+
+      alert(
+        "Precisamos da permissão para acessar a câmera."
+      );
+
+      return;
+    }
+
+
+    const resultado =
+      await ImagePicker.launchCameraAsync({
+
+        mediaTypes: ["images"],
+
+        allowsEditing: true,
+
+        quality: 1,
+
+      });
+
+
+    if (!resultado.canceled) {
+
+      console.log(
+        "Foto tirada:",
+        resultado.assets[0].uri
+      );
+
+      // Depois podemos enviar essa foto
+      // para a tela de criar publicação.
+    }
+  };
+
+
   return (
+
     <View style={styles.container}>
+
 
       <StatusBar
         barStyle="light-content"
         backgroundColor="#101010"
       />
 
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
 
-        {/* CAPA */}
+
+        {/* =========================
+                    CAPA
+                ========================= */}
+
         <ImageBackground
           source={require("../../../assets/airbnb.jpg")}
           style={styles.cover}
         >
 
+
           <View style={styles.topBar}>
 
-            {/* VOLTAR */}
-            <TouchableOpacity
-              style={styles.topButton}
-              onPress={() => router.back()}
-            >
-              <Ionicons
-                name="chevron-back"
-                size={26}
-                color="#fff"
-              />
-            </TouchableOpacity>
 
             {/* TRÊS PONTOS */}
+
             <TouchableOpacity
               style={styles.topButton}
-              onPress={() => router.push("/vivai/configuracao")}
+              onPress={() =>
+                router.push(
+                  "/vivai/configuracao"
+                )
+              }
             >
+
               <Ionicons
                 name="ellipsis-horizontal"
                 size={22}
                 color="#fff"
               />
+
             </TouchableOpacity>
 
+
           </View>
+
 
         </ImageBackground>
 
 
-        {/* FOTO + ESTATÍSTICAS */}
+        {/* =========================
+                    FOTO + ESTATÍSTICAS
+                ========================= */}
+
         <View style={styles.profileRow}>
+
 
           <Image
             source={require("../../../assets/pessoa.jpeg")}
             style={styles.avatar}
           />
 
+
           <View style={styles.statsRow}>
 
+
+            {/* PUBLICAÇÕES */}
+
             <TouchableOpacity>
+
               <View style={styles.statItem}>
+
                 <Text style={styles.statNumber}>
                   12
                 </Text>
@@ -103,12 +160,24 @@ export const SocialPerfil = () => {
                 <Text style={styles.statLabel}>
                   Publicações
                 </Text>
+
               </View>
+
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() => router.push("/vivai/seguidores")}>
+            {/* SEGUIDORES */}
+
+            <TouchableOpacity
+              onPress={() =>
+                router.push(
+                  "/vivai/seguidores"
+                )
+              }
+            >
+
               <View style={styles.statItem}>
+
                 <Text style={styles.statNumber}>
                   150
                 </Text>
@@ -116,12 +185,18 @@ export const SocialPerfil = () => {
                 <Text style={styles.statLabel}>
                   Seguidores
                 </Text>
+
               </View>
+
             </TouchableOpacity>
 
 
+            {/* SEGUINDO */}
+
             <TouchableOpacity>
+
               <View style={styles.statItem}>
+
                 <Text style={styles.statNumber}>
                   80
                 </Text>
@@ -129,140 +204,199 @@ export const SocialPerfil = () => {
                 <Text style={styles.statLabel}>
                   Seguindo
                 </Text>
+
               </View>
+
             </TouchableOpacity>
+
 
           </View>
 
         </View>
 
 
-        {/* INFORMAÇÕES */}
+        {/* =========================
+                    INFORMAÇÕES
+                ========================= */}
+
         <View style={styles.infoBlock}>
+
 
           <Text style={styles.name}>
             Gustavo Costa
           </Text>
 
+
           <Text style={styles.username}>
             @costawrrld
           </Text>
+
 
           <Text style={styles.bio}>
             Apaixonado por tecnologia, viagens{"\n"}
             e por boas histórias. ✨
           </Text>
 
+
         </View>
 
 
-        {/* BOTÕES */}
+        {/* =========================
+                    BOTÕES
+                ========================= */}
+
         <View style={styles.buttonsRow}>
+
 
           <TouchableOpacity
             style={styles.editButton}
           >
+
             <Text style={styles.editButtonText}>
               Editar perfil
             </Text>
+
           </TouchableOpacity>
 
 
           <TouchableOpacity
             style={styles.addButton}
           >
+
             <Ionicons
               name="person-add-outline"
               size={18}
               color="#fff"
             />
+
           </TouchableOpacity>
+
 
         </View>
 
 
-        {/* ABAS */}
+        {/* =========================
+                    ABAS
+                ========================= */}
+
         <View style={styles.tabsRow}>
 
-          <View
+
+          {/* PRIMEIRO ÍCONE
+                        PUBLICAÇÕES DO PERFIL */}
+
+          <TouchableOpacity
             style={[
               styles.tab,
               styles.tabActive
             ]}
           >
+
             <Ionicons
               name="grid-outline"
               size={22}
               color="#fff"
             />
-          </View>
+
+          </TouchableOpacity>
 
 
-          <View style={styles.tab}>
-            <Ionicons
-              name="camera-outline"
-              size={22}
-              color="#8e8e8e"
-            />
-          </View>
+          {/* TERCEIRO ÍCONE
+                        PUBLICAÇÕES SALVAS */}
 
+          <TouchableOpacity
+            style={styles.tab}
+            onPress={() =>
+              router.push("/vivai/salvas")
+            }
+          >
 
-          <View style={styles.tab}>
             <Ionicons
               name="bookmark-outline"
               size={22}
               color="#8e8e8e"
             />
-          </View>
+
+          </TouchableOpacity>
+
 
         </View>
 
 
-        {/* GRADE DE PUBLICAÇÕES */}
+        {/* =========================
+                    GRADE DE PUBLICAÇÕES
+                ========================= */}
+
         <View style={styles.grid}>
 
+
           {POSTS.map((imagem, index) => (
+
 
             <TouchableOpacity
               key={index}
               activeOpacity={0.8}
-              onPress={() => router.push("/vivai/detalhes")}
+              onPress={() =>
+                router.push(
+                  "/vivai/detalhes"
+                )
+              }
+              style={styles.gridItem}
             >
+
 
               <Image
                 source={imagem}
                 style={styles.gridImage}
+                resizeMode="cover"
               />
+
 
             </TouchableOpacity>
 
+
           ))}
 
+
         </View>
+
 
       </ScrollView>
 
 
-      {/* BOTÃO FLUTUANTE */}
+      {/* =========================
+                BOTÃO FLUTUANTE
+            ========================= */}
+
       <TouchableOpacity
         style={styles.botaoCriar}
-        onPress={() => router.push("/vivai/criar")}
+        onPress={() =>
+          router.push("/vivai/criar")
+        }
       >
+
         <Text style={styles.textoMais}>
           +
         </Text>
+
       </TouchableOpacity>
 
 
-      {/* BARRA DE NAVEGAÇÃO */}
+      {/* =========================
+                BARRA DE NAVEGAÇÃO
+            ========================= */}
+
       <BottomNav />
+
 
     </View>
   );
 };
 
 
+
 const styles = StyleSheet.create({
+
 
   container: {
     flex: 1,
@@ -275,7 +409,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* CAPA */
+  /* =========================
+     CAPA
+  ========================= */
 
   cover: {
     width: "100%",
@@ -285,8 +421,7 @@ const styles = StyleSheet.create({
 
   topBar: {
     flexDirection: "row",
-    justifyContent: "space-between",
-
+    justifyContent: "right",
     paddingHorizontal: 16,
     paddingTop: 45,
   },
@@ -301,7 +436,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* PERFIL */
+  /* =========================
+     PERFIL
+  ========================= */
 
   profileRow: {
     flexDirection: "row",
@@ -358,7 +495,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* INFORMAÇÕES */
+  /* =========================
+     INFORMAÇÕES
+  ========================= */
 
   infoBlock: {
     paddingHorizontal: 16,
@@ -396,7 +535,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* BOTÕES */
+  /* =========================
+     BOTÕES
+  ========================= */
 
   buttonsRow: {
     flexDirection: "row",
@@ -447,7 +588,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* ABAS */
+  /* =========================
+     ABAS
+  ========================= */
 
   tabsRow: {
     flexDirection: "row",
@@ -472,7 +615,9 @@ const styles = StyleSheet.create({
   },
 
 
-  /* GRADE */
+  /* =========================
+     GRADE
+  ========================= */
 
   grid: {
     flexDirection: "row",
@@ -480,21 +625,34 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
 
     marginTop: 2,
+
+    width: "100%",
+  },
+
+
+  gridItem: {
+    width: "33.333%",
+
+    aspectRatio: 1,
   },
 
 
   gridImage: {
-    width: GRID_SIZE,
-    height: GRID_SIZE,
+    width: "100%",
+
+    height: "100%",
   },
 
 
-  /* BOTÃO + */
+  /* =========================
+     BOTÃO +
+  ========================= */
 
   botaoCriar: {
     position: "absolute",
 
     right: 20,
+
     bottom: 90,
 
     width: 55,
@@ -508,6 +666,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     zIndex: 100,
+
     elevation: 10,
   },
 
@@ -522,4 +681,4 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
 
-});
+}); 

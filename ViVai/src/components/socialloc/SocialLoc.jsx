@@ -10,6 +10,7 @@ import {
 import { SocialLocStyle } from "./SocialLocStyle";
 
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 export const SocialLoc = () => {
@@ -18,220 +19,222 @@ export const SocialLoc = () => {
 
   return (
 
-    <ScrollView style={SocialLocStyle.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={SocialLocStyle.container}>
 
-      <View style={SocialLocStyle.boxNew}>
+        <View style={SocialLocStyle.boxNew}>
 
-        <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity onPress={() => router.back()}>
 
-          <Image
-            source={require("../../../assets/voltar.png")}
-            style={SocialLocStyle.icon}
-          />
+            <Image
+              source={require("../../../assets/voltar.png")}
+              style={SocialLocStyle.icon}
+            />
 
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-        <Text style={SocialLocStyle.text}>
-          Adicionar localização
-        </Text>
+          <Text style={SocialLocStyle.text}>
+            Adicionar localização
+          </Text>
 
-      </View>
-
-
-      <View style={SocialLocStyle.barraPesquisa}>
-
-        <Image
-          source={require("../../../assets/pesquisar.png")}
-          style={SocialLocStyle.iconPesquisa}
-        />
-
-        <TextInput
-          style={SocialLocStyle.inputPesquisa}
-          placeholder="Buscar lugar..."
-          placeholderTextColor="#888"
-        />
-
-      </View>
+        </View>
 
 
-      <TouchableOpacity>
-
-        <View style={SocialLocStyle.barraLoc}>
+        <View style={SocialLocStyle.barraPesquisa}>
 
           <Image
-            source={require("../../../assets/localizacao.png")}
+            source={require("../../../assets/pesquisar.png")}
             style={SocialLocStyle.iconPesquisa}
           />
 
-          <View style={SocialLocStyle.inputLoc}>
-
-            <Text style={SocialLocStyle.textM}>
-              Usar minha localização
-            </Text>
-
-          </View>
-
-          <Image
-            source={require("../../../assets/avancar.png")}
-            tintColor={"white"}
+          <TextInput
+            style={SocialLocStyle.inputPesquisa}
+            placeholder="Buscar lugar..."
+            placeholderTextColor="#888"
           />
 
         </View>
 
-      </TouchableOpacity>
 
+        <TouchableOpacity>
 
-      <View style={SocialLocStyle.boxT}>
+          <View style={SocialLocStyle.barraLoc}>
 
-        <Text style={SocialLocStyle.textP}>
-          Lugares próximos
-        </Text>
+            <Image
+              source={require("../../../assets/localizacao.png")}
+              style={SocialLocStyle.iconPesquisa}
+            />
 
-      </View>
+            <View style={SocialLocStyle.inputLoc}>
 
+              <Text style={SocialLocStyle.textM}>
+                Usar minha localização
+              </Text>
 
-      <View style={SocialLocStyle.listaLocais}>
+            </View>
 
-        <TouchableOpacity style={SocialLocStyle.viewI}>
-
-          <Image
-            source={require("../../../assets/ibira.jpg")}
-            style={SocialLocStyle.imgAlta}
-          />
-
-          <View style={SocialLocStyle.viewInf}>
-
-            <Text style={SocialLocStyle.textNome}>
-              Parque Ibirapuera
-            </Text>
-
-            <Text style={SocialLocStyle.textLocal}>
-              São Paulo, SP
-            </Text>
+            <Image
+              source={require("../../../assets/avancar.png")}
+              tintColor={"white"}
+            />
 
           </View>
 
-          <Text style={SocialLocStyle.textDistancia}>
-            2,3 km
-          </Text>
-
         </TouchableOpacity>
 
-        <View style={SocialLocStyle.divisao} />
 
+        <View style={SocialLocStyle.boxT}>
 
-        <TouchableOpacity style={SocialLocStyle.viewI}>
-
-          <Image
-            source={require("../../../assets/paulista.jpg")}
-            style={SocialLocStyle.imgAlta}
-          />
-
-          <View style={SocialLocStyle.viewInf}>
-
-            <Text style={SocialLocStyle.textNome}>
-              Avenida Paulista
-            </Text>
-
-            <Text style={SocialLocStyle.textLocal}>
-              São Paulo, SP
-            </Text>
-
-          </View>
-
-          <Text style={SocialLocStyle.textDistancia}>
-            3,1 km
+          <Text style={SocialLocStyle.textP}>
+            Lugares próximos
           </Text>
 
-        </TouchableOpacity>
-
-        <View style={SocialLocStyle.divisao} />
+        </View>
 
 
-        <TouchableOpacity style={SocialLocStyle.viewI}>
+        <View style={SocialLocStyle.listaLocais}>
 
-          <Image
-            source={require("../../../assets/masp.jpg")}
-            style={SocialLocStyle.imgAlta}
-          />
+          <TouchableOpacity style={SocialLocStyle.viewI}>
 
-          <View style={SocialLocStyle.viewInf}>
+            <Image
+              source={require("../../../assets/ibira.jpg")}
+              style={SocialLocStyle.imgAlta}
+            />
 
-            <Text style={SocialLocStyle.textNome}>
-              MASP
+            <View style={SocialLocStyle.viewInf}>
+
+              <Text style={SocialLocStyle.textNome}>
+                Parque Ibirapuera
+              </Text>
+
+              <Text style={SocialLocStyle.textLocal}>
+                São Paulo, SP
+              </Text>
+
+            </View>
+
+            <Text style={SocialLocStyle.textDistancia}>
+              2,3 km
             </Text>
 
-            <Text style={SocialLocStyle.textLocal}>
-              São Paulo, SP
+          </TouchableOpacity>
+
+          <View style={SocialLocStyle.divisao} />
+
+
+          <TouchableOpacity style={SocialLocStyle.viewI}>
+
+            <Image
+              source={require("../../../assets/paulista.jpg")}
+              style={SocialLocStyle.imgAlta}
+            />
+
+            <View style={SocialLocStyle.viewInf}>
+
+              <Text style={SocialLocStyle.textNome}>
+                Avenida Paulista
+              </Text>
+
+              <Text style={SocialLocStyle.textLocal}>
+                São Paulo, SP
+              </Text>
+
+            </View>
+
+            <Text style={SocialLocStyle.textDistancia}>
+              3,1 km
             </Text>
 
-          </View>
+          </TouchableOpacity>
 
-          <Text style={SocialLocStyle.textDistancia}>
-            3,4 km
-          </Text>
-
-        </TouchableOpacity>
-
-        <View style={SocialLocStyle.divisao} />
+          <View style={SocialLocStyle.divisao} />
 
 
-        <TouchableOpacity style={SocialLocStyle.viewI}>
+          <TouchableOpacity style={SocialLocStyle.viewI}>
 
-          <Image
-            source={require("../../../assets/povo.jpg")}
-            style={SocialLocStyle.imgAlta}
-          />
+            <Image
+              source={require("../../../assets/masp.jpg")}
+              style={SocialLocStyle.imgAlta}
+            />
 
-          <View style={SocialLocStyle.viewInf}>
+            <View style={SocialLocStyle.viewInf}>
 
-            <Text style={SocialLocStyle.textNome}>
-              Parque do Povo
+              <Text style={SocialLocStyle.textNome}>
+                MASP
+              </Text>
+
+              <Text style={SocialLocStyle.textLocal}>
+                São Paulo, SP
+              </Text>
+
+            </View>
+
+            <Text style={SocialLocStyle.textDistancia}>
+              3,4 km
             </Text>
 
-            <Text style={SocialLocStyle.textLocal}>
-              São Paulo, SP
+          </TouchableOpacity>
+
+          <View style={SocialLocStyle.divisao} />
+
+
+          <TouchableOpacity style={SocialLocStyle.viewI}>
+
+            <Image
+              source={require("../../../assets/povo.jpg")}
+              style={SocialLocStyle.imgAlta}
+            />
+
+            <View style={SocialLocStyle.viewInf}>
+
+              <Text style={SocialLocStyle.textNome}>
+                Parque do Povo
+              </Text>
+
+              <Text style={SocialLocStyle.textLocal}>
+                São Paulo, SP
+              </Text>
+
+            </View>
+
+            <Text style={SocialLocStyle.textDistancia}>
+              4,2 km
             </Text>
 
-          </View>
+          </TouchableOpacity>
 
-          <Text style={SocialLocStyle.textDistancia}>
-            4,2 km
-          </Text>
-
-        </TouchableOpacity>
-
-        <View style={SocialLocStyle.divisao} />
+          <View style={SocialLocStyle.divisao} />
 
 
-        <TouchableOpacity style={SocialLocStyle.viewI}>
+          <TouchableOpacity style={SocialLocStyle.viewI}>
 
-          <Image
-            source={require("../../../assets/iguatemi.jpg")}
-            style={SocialLocStyle.imgAlta}
-          />
+            <Image
+              source={require("../../../assets/iguatemi.jpg")}
+              style={SocialLocStyle.imgAlta}
+            />
 
-          <View style={SocialLocStyle.viewInf}>
+            <View style={SocialLocStyle.viewInf}>
 
-            <Text style={SocialLocStyle.textNome}>
-              Shopping Iguatemi
+              <Text style={SocialLocStyle.textNome}>
+                Shopping Iguatemi
+              </Text>
+
+              <Text style={SocialLocStyle.textLocal}>
+                São Paulo, SP
+              </Text>
+
+            </View>
+
+            <Text style={SocialLocStyle.textDistancia}>
+              5,0 km
             </Text>
 
-            <Text style={SocialLocStyle.textLocal}>
-              São Paulo, SP
-            </Text>
+          </TouchableOpacity>
 
-          </View>
+        </View>
 
-          <Text style={SocialLocStyle.textDistancia}>
-            5,0 km
-          </Text>
-
-        </TouchableOpacity>
-
-      </View>
-
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
 
   );
 

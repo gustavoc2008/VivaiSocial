@@ -14,13 +14,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../context/Context";
 
 export const SocialForm = () => {
 
     const router = useRouter()
 
+    const { login } = useAuth()
+
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const [mostrarSenha, setMostrarSenha] = useState(false)
 
 
     const fazerLogin = async () => {
@@ -34,17 +38,17 @@ export const SocialForm = () => {
         }
 
         try {
-            const resposta = await axios.get("http://localhost:3000/usuarios")
+            const resposta = await axios.get("http://192.168.137.1:3000/usuarios")
 
             const usuario = resposta.data.filter(
                 (item) => (item.email == email || item.usuario == email) && item.senha == senha
             )
 
             if (usuario.length > 0) {
+                login(usuario[0])
                 router.push("/vivai/inicio")
             } else {
-                Alert.alert(
-                    "Erro",
+                alert(
                     "E-mail ou Senha incorretos"
                 )
             }
@@ -119,13 +123,14 @@ export const SocialForm = () => {
                                 style={SocialFormStyle.textEmail}
                                 placeholder="Digite sua senha"
                                 placeholderTextColor="#8A8A8A"
-                                secureTextEntry={true}
+                                secureTextEntry={!mostrarSenha}
                                 value={senha}
                                 onChangeText={setSenha}
                             />
 
                             <TouchableOpacity
                                 style={SocialFormStyle.eyeButton}
+                                onPress={() => setMostrarSenha(!mostrarSenha)}
                             >
                                 <Image
                                     source={require("../../../assets/exibir.png")}
@@ -139,16 +144,14 @@ export const SocialForm = () => {
 
 
 
-                    <TouchableOpacity>
-
+                    <TouchableOpacity
+                        onPress={() => router.push("/vivai/esqueci")}
+                    >
                         <View style={SocialFormStyle.boxInfo}>
-
                             <Text style={SocialFormStyle.textEsqueceu}>
                                 Esqueceu sua senha?
                             </Text>
-
                         </View>
-
                     </TouchableOpacity>
 
 

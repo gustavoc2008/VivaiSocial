@@ -3,356 +3,226 @@ import {
     ScrollView,
     Text,
     TouchableOpacity,
-    View
+    View,
 } from "react-native";
 
-import { BottomNav } from "../bottomnav/BottomNav";
-import { SocialInicioStyle } from "./SocialInicioStyle";
+import { useCallback, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import axios from "axios";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
-import { useState } from "react";
+
+import { SocialInicioStyle } from "./SocialInicioStyle";
+import { BottomNav } from "../bottomnav/BottomNav";
+
 
 export const SocialInicio = () => {
+    const router = useRouter();
 
-    const [curtido1, setCurtido1] = useState(false);
-    const [salvo1, setSalvo1] = useState(false);
+    const [publicacoes, setPublicacoes] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
 
-    const [curtido2, setCurtido2] = useState(false);
-    const [salvo2, setSalvo2] = useState(false);
+    const getDados = async () => {
+        try {
+            const respostaPublicacoes = await axios.get(`${API_URL}/publicacoes`);
+            const respostaUsuarios = await axios.get(`${API_URL}/usuarios`);
+
+            setPublicacoes(respostaPublicacoes.data);
+            setUsuarios(respostaUsuarios.data);
+        } catch (error) {
+            console.log("Erro ao buscar dados:", error);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            getDados();
+        }, [])
+    );
+
+    const curtirPubli = async (id) => {
+        try {
+            const publicacao = publicacoes.find((item) => item.id === id);
+            if (!publicacao) return;
+
+            const novoEstado = !publicacao.curtido;
+            const novasCurtidas = novoEstado
+                ? (publicacao.curtidas || 0) + 1
+                : Math.max((publicacao.curtidas || 0) - 1, 0);
+
+            await axios.patch(`${API_URL}/publicacoes/${id}`, {
+                curtidas: novasCurtidas,
+                curtido: novoEstado,
+            });
+
+            setPublicacoes((prev) =>
+                prev.map((item) =>
+                    item.id === id
+                        ? { ...item, curtidas: novasCurtidas, curtido: novoEstado }
+                        : item
+                )
+            );
+        } catch (error) {
+            console.log("Erro ao curtir publicação:", error);
+        }
+    };
 
     return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#171717" }}>
+            <ScrollView
+                style={SocialInicioStyle.container}
+                contentContainerStyle={{ paddingBottom: 130 }}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* HEADER */}
+                <View style={SocialInicioStyle.boxHeader}>
+                    <Text style={SocialInicioStyle.title}>
+                        Vi<Text style={SocialInicioStyle.titleVai}>vaí</Text>
+                    </Text>
 
-        <SafeAreaView style={{ flex: 1 }}>
-
-            <View style={SocialInicioStyle.container}>
-
-                <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{ paddingBottom: 120 }}
-                >
-
-                    {/* HEADER */}
-                    <View style={SocialInicioStyle.boxHeader}>
-
-                        <Text style={SocialInicioStyle.title}>
-                            Vi
-                            <Text style={SocialInicioStyle.titleVai}>
-                                vaí
-                            </Text>
-                        </Text>
-
+                    <TouchableOpacity onPress={() => router.push("/vivai/notificacoes")}>
                         <Image
                             source={require("../../../assets/notificacao.png")}
                             style={SocialInicioStyle.iconN}
                         />
+                    </TouchableOpacity>
+                </View>
 
-                    </View>
+                {/* FEED DE PUBLICAÇÕES */}
+                {publicacoes.map((item) => {
+                    const usuario = usuarios.find((u) => u.nome === item.usuario);
 
+                    // Pega a URL da foto da publicação vinda da lista 'imagem' do db.json
+                    const urlImagemPost = Array.isArray(item.imagem) ? item.imagem[0] : item.imagem;
 
-                    {/* ================= POST 1 ================= */}
+                    return (
+                        <View key={item.id} style={SocialInicioStyle.containerFeed}>
 
-                    <View style={SocialInicioStyle.containerFeed}>
-
-                        <View style={SocialInicioStyle.boxFeed}>
-
-                            <Image
-                                source={require("../../../assets/pessoa.jpeg")}
-                                style={SocialInicioStyle.imgP}
-                            />
-
-                            <View style={SocialInicioStyle.boxText}>
-
-                                <Text style={SocialInicioStyle.textName}>
-                                    Gustavo Costa
-                                </Text>
-
-                                <Text style={SocialInicioStyle.textHora}>
-                                    Há 2 horas
-                                </Text>
-
-                            </View>
-
-                            <TouchableOpacity
-                                style={SocialInicioStyle.botaoPontos}
-                            >
-                                <Image
-                                    source={require("../../../assets/pontos.png")}
-                                    style={SocialInicioStyle.iconP}
-                                />
-                            </TouchableOpacity>
-
-                        </View>
-
-
-                        <TouchableOpacity
-                            activeOpacity={0.9}
-                            onPress={() => router.push("/vivai/detalhes")}
-                        >
-
-                            <View style={SocialInicioStyle.boxPubli}>
-
-                                <Text style={SocialInicioStyle.textDesc}>
-                                    Aproveitando o final de semana
-                                </Text>
-
-                                <Text style={SocialInicioStyle.textDesc}>
-                                    Dias leves são os melhores.
-                                </Text>
-
-                                <Image
-                                    source={require("../../../assets/helipa.jpg")}
-                                    style={SocialInicioStyle.imgPaisagem}
-                                />
-
-                            </View>
-
-                        </TouchableOpacity>
-
-
-                        {/* ÍCONES POST 1 */}
-
-                        <View style={SocialInicioStyle.boxIcons}>
-
-                            <TouchableOpacity
-                                onPress={() => setCurtido1(!curtido1)}
-                            >
-                                <View style={SocialInicioStyle.iconGroup}>
-
+                            {/* USUÁRIO E FOTO DE PERFIL */}
+                            <View style={SocialInicioStyle.boxFeed}>
+                                <TouchableOpacity onPress={() => router.push("/vivai/perfil")}>
                                     <Image
-                                        source={require("../../../assets/coracao.png")}
-                                        style={[
-                                            SocialInicioStyle.icons,
-                                            curtido1 && {
-                                                tintColor: "#FF0000"
-                                            }
-                                        ]}
+                                        source={
+                                            usuario?.foto && fotosPerfil[usuario.foto]
+                                                ? fotosPerfil[usuario.foto]
+                                                : fotosPerfil["pessoa.jpeg"]
+                                        }
+                                        style={SocialInicioStyle.imgP}
                                     />
+                                </TouchableOpacity>
 
-                                    <Text style={SocialInicioStyle.iconText}>
-                                        24
-                                    </Text>
+                                <View style={SocialInicioStyle.boxText}>
+                                    <Text style={SocialInicioStyle.textName}>{item.usuario}</Text>
+                                    <Text style={SocialInicioStyle.textHora}>{item.tempo}</Text>
+                                </View>
 
+                                <TouchableOpacity style={SocialInicioStyle.botaoPontos}>
+                                    <Image
+                                        source={require("../../../assets/pontos.png")}
+                                        style={SocialInicioStyle.iconP}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+
+                            {/* TEXTO E FOTO DA PUBLICAÇÃO */}
+                            <TouchableOpacity
+                                activeOpacity={0.9}
+                                onPress={() =>
+                                    router.push({
+                                        pathname: "/vivai/detalhes",
+                                        params: { id: item.id },
+                                    })
+                                }
+                            >
+                                <View style={SocialInicioStyle.boxPubli}>
+                                    {item.descricao && (
+                                        <Text style={SocialInicioStyle.textDesc}>
+                                            {item.descricao}
+                                        </Text>
+                                    )}
+
+                                    {/* Imagem do Unsplash vinda do JSON */}
+                                    {urlImagemPost && (
+                                        <Image
+                                            source={{ uri: urlImagemPost }}
+                                            style={SocialInicioStyle.imgPaisagem}
+                                        />
+                                    )}
                                 </View>
                             </TouchableOpacity>
 
+                            {/* BOTÕES DE AÇÃO */}
+                            <View style={SocialInicioStyle.boxIcons}>
+                                <TouchableOpacity onPress={() => curtirPubli(item.id)}>
+                                    <View style={SocialInicioStyle.iconGroup}>
+                                        <Image
+                                            source={require("../../../assets/coracao.png")}
+                                            style={[
+                                                SocialInicioStyle.icons,
+                                                item.curtido && { tintColor: "red" },
+                                            ]}
+                                        />
+                                        <Text style={SocialInicioStyle.iconText}>
+                                            {item.curtidas || 0}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        router.push({
+                                            pathname: "/vivai/detalhes",
+                                            params: { id: item.id },
+                                        })
+                                    }
+                                >
+                                    <View style={SocialInicioStyle.iconGroup}>
+                                        <Image
+                                            source={require("../../../assets/comentario.png")}
+                                            style={SocialInicioStyle.icons}
+                                        />
+                                        <Text style={SocialInicioStyle.iconText}>
+                                            {item.comentarios || 0}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
 
-                                <View style={SocialInicioStyle.iconGroup}>
-
+                                <TouchableOpacity>
                                     <Image
-                                        source={require("../../../assets/comentario.png")}
+                                        source={require("../../../assets/enviar.png")}
                                         style={SocialInicioStyle.icons}
                                     />
+                                </TouchableOpacity>
 
-                                    <Text style={SocialInicioStyle.iconText}>
-                                        5
-                                    </Text>
+                                <View style={SocialInicioStyle.iconSpacer} />
 
-                                </View>
-
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-
-                                <Image
-                                    source={require("../../../assets/enviar.png")}
-                                    style={SocialInicioStyle.icons}
-                                />
-
-                            </TouchableOpacity>
-
-
-                            <View style={SocialInicioStyle.iconSpacer} />
-
-
-                            <TouchableOpacity
-                                onPress={() => setSalvo1(!salvo1)}
-                            >
-
-                                <Image
-                                    source={require("../../../assets/salvar.png")}
-                                    style={[
-                                        SocialInicioStyle.icons,
-                                        salvo1 && {
-                                            tintColor: "#FFD700"
-                                        }
-                                    ]}
-                                />
-
-                            </TouchableOpacity>
-
-                        </View>
-
-                    </View>
-
-
-                    {/* ================= POST 2 ================= */}
-
-                    <View style={SocialInicioStyle.containerFeed}>
-
-                        <View style={SocialInicioStyle.boxFeed}>
-
-                            <Image
-                                source={require("../../../assets/pessoa.jpeg")}
-                                style={SocialInicioStyle.imgP}
-                            />
-
-                            <View style={SocialInicioStyle.boxText}>
-
-                                <Text style={SocialInicioStyle.textName}>
-                                    Gustavo Costa
-                                </Text>
-
-                                <Text style={SocialInicioStyle.textHora}>
-                                    Há 3 horas
-                                </Text>
-
-                            </View>
-
-                            <TouchableOpacity
-                                style={SocialInicioStyle.botaoPontos}
-                            >
-                                <Image
-                                    source={require("../../../assets/pontos.png")}
-                                    style={SocialInicioStyle.iconP}
-                                />
-                            </TouchableOpacity>
-
-                        </View>
-
-
-                        {/* ÁREA CLICÁVEL DO POST 2 */}
-
-                        <TouchableOpacity
-                            activeOpacity={0.9}
-                            onPress={() => router.push("/vivai/detalhes")}
-                        >
-
-                            <View style={SocialInicioStyle.boxPubli}>
-
-                                <Text style={SocialInicioStyle.textDesc}>
-                                    Conhecendo lugares novos
-                                </Text>
-
-                                <Text style={SocialInicioStyle.textDesc}>
-                                    Cada lugar tem uma história.
-                                </Text>
-
-                                <Image
-                                    source={require("../../../assets/cidade.jpg")}
-                                    style={SocialInicioStyle.imgPaisagem}
-                                />
-
-                            </View>
-
-                        </TouchableOpacity>
-
-
-                        {/* ÍCONES POST 2 */}
-
-                        <View style={SocialInicioStyle.boxIcons}>
-
-                            <TouchableOpacity
-                                onPress={() => setCurtido2(!curtido2)}
-                            >
-
-                                <View style={SocialInicioStyle.iconGroup}>
-
+                                <TouchableOpacity>
                                     <Image
-                                        source={require("../../../assets/coracao.png")}
-                                        style={[
-                                            SocialInicioStyle.icons,
-                                            curtido2 && {
-                                                tintColor: "#FF0000"
-                                            }
-                                        ]}
-                                    />
-
-                                    <Text style={SocialInicioStyle.iconText}>
-                                        18
-                                    </Text>
-
-                                </View>
-
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-
-                                <View style={SocialInicioStyle.iconGroup}>
-
-                                    <Image
-                                        source={require("../../../assets/comentario.png")}
+                                        source={require("../../../assets/salvar.png")}
                                         style={SocialInicioStyle.icons}
                                     />
-
-                                    <Text style={SocialInicioStyle.iconText}>
-                                        3
-                                    </Text>
-
-                                </View>
-
-                            </TouchableOpacity>
-
-
-                            <TouchableOpacity>
-
-                                <Image
-                                    source={require("../../../assets/enviar.png")}
-                                    style={SocialInicioStyle.icons}
-                                />
-
-                            </TouchableOpacity>
-
-
-                            <View style={SocialInicioStyle.iconSpacer} />
-
-
-                            <TouchableOpacity
-                                onPress={() => setSalvo2(!salvo2)}
-                            >
-
-                                <Image
-                                    source={require("../../../assets/salvar.png")}
-                                    style={[
-                                        SocialInicioStyle.icons,
-                                        salvo2 && {
-                                            tintColor: "#FFD700"
-                                        }
-                                    ]}
-                                />
-
-                            </TouchableOpacity>
+                                </TouchableOpacity>
+                            </View>
 
                         </View>
+                    );
+                })}
+            </ScrollView>
 
-                    </View>
-
-                </ScrollView>
-
-
-                {/* BOTÃO + */}
+            {/* BOTÃO FLUTUANTE DE CRIAR */}
+            <View style={SocialInicioStyle.bottomArea}>
 
                 <TouchableOpacity
                     style={SocialInicioStyle.botaoCriar}
                     onPress={() => router.push("/vivai/criar")}
                 >
-
-                    <Text style={SocialInicioStyle.textoMais}>
-                        +
-                    </Text>
-
+                    <Text style={SocialInicioStyle.textoMais}>+</Text>
                 </TouchableOpacity>
-
-
-                {/* NAVBAR */}
 
                 <BottomNav />
 
             </View>
 
+            <BottomNav />
         </SafeAreaView>
     );
 };

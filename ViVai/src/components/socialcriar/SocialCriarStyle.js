@@ -34,30 +34,37 @@ export const SocialCriarStyle = StyleSheet.create({
 
     boxImg: {
         flexDirection: "row",
+        flexWrap: "wrap",
         justifyContent: "space-between",
         width: "90%",
         alignSelf: "center",
         marginBottom: 20,
     },
 
+    scrollImagens: {
+        flex: 1,
+    },
+
     boxImage: {
-        width: "30%",
+        width: 105,
         aspectRatio: 2 / 3,
         borderWidth: 2,
         borderColor: "#3A3A3A",
         borderRadius: 10,
         overflow: "hidden",
         position: "relative",
+        marginBottom: 10,
     },
 
     boxImageAdd: {
-        width: "30%",
+        width: 105,
         aspectRatio: 2 / 3,
         borderWidth: 2,
         borderColor: "#3A3A3A",
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
+        marginBottom: 10,
     },
 
     img: {

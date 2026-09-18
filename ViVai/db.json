@@ -61,55 +61,374 @@
       "nome": "Gustavo Costa",
       "usuario": "costagustavo",
       "email": "gustavo@gmail.com",
-      "senha": "123456",
+      "senha": "12345",
       "foto": "pessoa.jpeg"
-    },
-    {
-      "id": "Xfo8DdS8pNc"
-    },
-    {
-      "id": "nQyLyISOL6A"
-    },
-    {
-      "id": "jagERWU_5E4"
-    },
-    {
-      "nome": "Maria Eduarda Cordeiro",
-      "usuario": "cordeiro_maah",
-      "email": "mariaeduarda@gmail.com",
-      "senha": "123456",
-      "id": "zq-P5Xaop3g"
     }
   ],
   "publicacoes": [
     {
-      "id": "1",
-      "usuarioId": 1,
-      "nomeUsuario": "Gustavo Costa",
-      "fotoUsuario": "pessoa.jpeg",
-      "titulo": "Aproveitando o final de semana",
-      "descricao": "Dias leves são os melhores.",
-      "imagem": "helipa.jpg",
+      "id": 1,
+      "usuario": "Gustavo Costa",
+      "tempo": "Há 2 horas",
+      "descricao": "Aproveitando o final de semana 🌅",
+      "imagem": [
+        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80"
+      ],
       "curtidas": 24,
-      "comentarios": 5
-    }
-  ],
-  "comentarios": [
-    {
-      "id": "1",
-      "publicacaoId": 1,
-      "nomeUsuario": "Maria Eduarda",
-      "fotoUsuario": "pessoa2.png",
-      "texto": "Que lugar lindo! 😍",
-      "curtidas": 0
+      "comentarios": 5,
+      "listaComentarios": [
+        {
+          "id": 101,
+          "usuario": "Maria Eduarda",
+          "texto": "Lugar lindo!",
+          "tempo": "Há 1 hora"
+        },
+        {
+          "id": 102,
+          "usuario": "Lucas Henrique",
+          "texto": "Muito bonito 🔥",
+          "tempo": "Há 50 minutos"
+        },
+        {
+          "id": 103,
+          "usuario": "Ana Beatriz",
+          "texto": "Quero conhecer!",
+          "tempo": "Há 40 minutos"
+        },
+        {
+          "id": 104,
+          "usuario": "Rafael Santos",
+          "texto": "Brabo demais",
+          "tempo": "Há 30 minutos"
+        },
+        {
+          "id": 105,
+          "usuario": "Julia Martins",
+          "texto": "Essa foto ficou muito boa",
+          "tempo": "Há 10 minutos"
+        }
+      ],
+      "curtido": false
     },
     {
-      "id": "2",
-      "publicacaoId": 1,
-      "nomeUsuario": "Carlos Lima",
-      "fotoUsuario": "pessoa.jpeg",
-      "texto": "Perfeito demais! 👋",
-      "curtidas": 0
+      "id": 2,
+      "usuario": "Maria Eduarda Cordeiro",
+      "tempo": "Há 5 horas",
+      "descricao": "Um dia tranquilo para esquecer dos problemas ☀️",
+      "imagem": [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 37,
+      "comentarios": 4,
+      "listaComentarios": [
+        {
+          "id": 201,
+          "usuario": "Gustavo Costa",
+          "texto": "Que lugar bonito",
+          "tempo": "Há 4 horas"
+        },
+        {
+          "id": 202,
+          "usuario": "Lucas Henrique",
+          "texto": "Parece muito tranquilo",
+          "tempo": "Há 3 horas"
+        },
+        {
+          "id": 203,
+          "usuario": "Julia Martins",
+          "texto": "Amei essa foto 😍",
+          "tempo": "Há 2 horas"
+        },
+        {
+          "id": 204,
+          "usuario": "Rafael Santos",
+          "texto": "Muito bom!",
+          "tempo": "Há 1 hora"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 3,
+      "usuario": "Lucas Henrique",
+      "tempo": "Ontem",
+      "descricao": "Alguns momentos simplesmente merecem ser registrados.",
+      "imagem": [
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 17,
+      "comentarios": 3,
+      "listaComentarios": [
+        {
+          "id": 301,
+          "usuario": "Maria Eduarda",
+          "texto": "Ficou muito boa!",
+          "tempo": "Ontem"
+        },
+        {
+          "id": 302,
+          "usuario": "Gustavo Costa",
+          "texto": "Boa foto mano",
+          "tempo": "Ontem"
+        },
+        {
+          "id": 303,
+          "usuario": "Ana Beatriz",
+          "texto": "Gostei muito 👏",
+          "tempo": "Ontem"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 4,
+      "usuario": "Ana Beatriz Rocha",
+      "tempo": "Há 2 dias",
+      "descricao": "Fim de tarde 🌇",
+      "imagem": [
+        "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 42,
+      "comentarios": 6,
+      "listaComentarios": [
+        {
+          "id": 401,
+          "usuario": "Julia Martins",
+          "texto": "Que paisagem!",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 402,
+          "usuario": "Gustavo Costa",
+          "texto": "Essa vista é surreal",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 403,
+          "usuario": "Lucas Henrique",
+          "texto": "Muito bonita",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 404,
+          "usuario": "Maria Eduarda",
+          "texto": "Amei 🌄",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 405,
+          "usuario": "Rafael Santos",
+          "texto": "Lugar perfeito",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 406,
+          "usuario": "Pedro Almeida",
+          "texto": "Queria estar aí",
+          "tempo": "Há 2 dias"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 5,
+      "usuario": "Julia Martins",
+      "tempo": "Há 3 dias",
+      "descricao": "Dias simples são os melhores.",
+      "imagem": [
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 31,
+      "comentarios": 4,
+      "listaComentarios": [
+        {
+          "id": 501,
+          "usuario": "Ana Beatriz",
+          "texto": "Linda foto!",
+          "tempo": "Há 3 dias"
+        },
+        {
+          "id": 502,
+          "usuario": "Maria Eduarda",
+          "texto": "Amei ❤️",
+          "tempo": "Há 3 dias"
+        },
+        {
+          "id": 503,
+          "usuario": "Gustavo Costa",
+          "texto": "Ficou muito boa",
+          "tempo": "Há 2 dias"
+        },
+        {
+          "id": 504,
+          "usuario": "Lucas Henrique",
+          "texto": "Muito estilo",
+          "tempo": "Há 2 dias"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 6,
+      "usuario": "Rafael Santos",
+      "tempo": "Há 4 dias",
+      "descricao": "Explorando novos lugares 🌲",
+      "imagem": [
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 56,
+      "comentarios": 7,
+      "listaComentarios": [
+        {
+          "id": 601,
+          "usuario": "Gustavo Costa",
+          "texto": "Que lugar insano",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 602,
+          "usuario": "Maria Eduarda",
+          "texto": "A natureza é muito bonita",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 603,
+          "usuario": "Julia Martins",
+          "texto": "Onde fica?",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 604,
+          "usuario": "Lucas Henrique",
+          "texto": "Muito bonito",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 605,
+          "usuario": "Ana Beatriz",
+          "texto": "Que paz",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 606,
+          "usuario": "Pedro Almeida",
+          "texto": "Top demais",
+          "tempo": "Há 3 dias"
+        },
+        {
+          "id": 607,
+          "usuario": "Julia Martins",
+          "texto": "Preciso conhecer",
+          "tempo": "Há 3 dias"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 7,
+      "usuario": "Pedro Almeida",
+      "tempo": "Há 5 dias",
+      "descricao": "Curtindo o dia com os amigos 📸",
+      "imagem": [
+        "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 62,
+      "comentarios": 5,
+      "listaComentarios": [
+        {
+          "id": 701,
+          "usuario": "Rafael Santos",
+          "texto": "Essa resenha foi boa",
+          "tempo": "Há 5 dias"
+        },
+        {
+          "id": 702,
+          "usuario": "Gustavo Costa",
+          "texto": "Só os cria",
+          "tempo": "Há 5 dias"
+        },
+        {
+          "id": 703,
+          "usuario": "Lucas Henrique",
+          "texto": "KKKKKK boa",
+          "tempo": "Há 5 dias"
+        },
+        {
+          "id": 704,
+          "usuario": "Maria Eduarda",
+          "texto": "Muito bom 😂",
+          "tempo": "Há 4 dias"
+        },
+        {
+          "id": 705,
+          "usuario": "Julia Martins",
+          "texto": "Aí sim!",
+          "tempo": "Há 4 dias"
+        }
+      ],
+      "curtido": false
+    },
+    {
+      "id": 8,
+      "usuario": "Camila Oliveira",
+      "tempo": "Há 1 semana",
+      "descricao": "Um daqueles lugares que parecem cena de filme 🎬",
+      "imagem": [
+        "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1000&q=80"
+      ],
+      "curtidas": 89,
+      "comentarios": 8,
+      "listaComentarios": [
+        {
+          "id": 801,
+          "usuario": "Gustavo Costa",
+          "texto": "Parece até filme",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 802,
+          "usuario": "Maria Eduarda",
+          "texto": "Que paisagem linda",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 803,
+          "usuario": "Pedro Almeida",
+          "texto": "Muito bonito",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 804,
+          "usuario": "Julia Martins",
+          "texto": "Eu iria fácil",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 805,
+          "usuario": "Rafael Santos",
+          "texto": "Lugar absurdo",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 806,
+          "usuario": "Ana Beatriz",
+          "texto": "Amei essa vista",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 807,
+          "usuario": "Lucas Henrique",
+          "texto": "Muito lindo",
+          "tempo": "Há 1 semana"
+        },
+        {
+          "id": 808,
+          "usuario": "Gustavo Costa",
+          "texto": "Salvei para conhecer depois",
+          "tempo": "Há 6 dias"
+        }
+      ],
+      "curtido": false
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

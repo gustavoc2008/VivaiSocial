@@ -1,24 +1,41 @@
-import { Image, Text, TouchableOpacity, View } from "react-native"
-import { SocialCadastroStyle } from "./SocialCadastroStyle"
-import { ScrollView } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { useRouter } from "expo-router"
-import { TextInput } from "react-native"
-import { useState } from "react"
-import axios from "axios"
+import { Image, Text, TouchableOpacity, View, ScrollView, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
 
+import { SocialCadastroStyle } from "./SocialCadastroStyle";
 
 export const SocialCadastro = () => {
+    const router = useRouter();
 
-    const router = useRouter()
+    const [nome, setNome] = useState("");
+    const [usuario, setUsuario] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [foto, setFoto] = useState("");
+    const [mostrarSenha, setMostrarSenha] = useState(false);
 
-    const [nome, setNome] = useState("")
-    const [usuario, setUsuario] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    const [foto, setFoto] = useState("")
-    const [mostrarSenha, setMostrarSenha] = useState(false)
+    const escolherFoto = async () => {
+        const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
+        if (!permissao.granted) {
+            alert("Permissão para acessar a galeria foi negada.");
+            return;
+        }
+
+        const resultado = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.8,
+        });
+
+        if (!resultado.canceled) {
+            setFoto(resultado.assets[0].uri);
+        }
+    };
 
     const fazerCadastro = async () => {
         if (
@@ -27,34 +44,30 @@ export const SocialCadastro = () => {
             email == "" ||
             senha == ""
         ) {
-            alert(
-                "Preencha todos os campos!"
-            )
-
-            return
+            alert("Preencha todos os campos!");
+            return;
         }
 
-
         try {
-            await axios.post("http://localhost:3000/usuarios",
+            await axios.post(
+                "http://192.168.137.1:3000/usuarios",
                 {
                     nome: nome,
                     usuario: usuario,
                     email: email,
-                    senha: senha
+                    senha: senha,
+                    foto: foto
                 }
-            )
+            );
 
-            alert(
-                "Conta criado com sucesso!"
-            )
+            alert("Conta criada com sucesso!");
 
-            router.push("/vivai/login")
-
+            router.push("/vivai/login");
         } catch (error) {
-            console.log("Erro ao criar a conta", error);
+            console.log("Erro ao criar a conta:", error);
+            alert("Erro ao criar a conta.");
         }
-    }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -70,7 +83,6 @@ export const SocialCadastro = () => {
                 </TouchableOpacity>
 
                 <View style={SocialCadastroStyle.boxText}>
-
                     <Text style={SocialCadastroStyle.text}>
                         Criar sua Conta
                     </Text>
@@ -78,26 +90,38 @@ export const SocialCadastro = () => {
                     <Text style={SocialCadastroStyle.textMini}>
                         É rápido e fácil.
                     </Text>
-
                 </View>
 
                 <View style={SocialCadastroStyle.boxCamera}>
-                    <Image
-                        source={require("../../../assets/camera.png")}
-                        style={SocialCadastroStyle.camera}
-                    />
+                    {foto ? (
+                        <Image
+                            source={{ uri: foto }}
+                            style={SocialCadastroStyle.fotoPerfil}
+                        />
+                    ) : (
+                        <Image
+                            source={require("../../../assets/camera.png")}
+                            style={SocialCadastroStyle.camera}
+                        />
+                    )}
                 </View>
 
-                <Text style={SocialCadastroStyle.textEsqueceu}> Adicionar foto </Text>
+
+
+                <TouchableOpacity onPress={escolherFoto}>
+                    <Text style={SocialCadastroStyle.textEsqueceu}>
+                        {foto ? "Trocar foto" : "Adicionar foto"}
+                    </Text>
+                </TouchableOpacity>
+
+                
 
                 <View style={SocialCadastroStyle.boxInfo}>
-
                     <Text style={SocialCadastroStyle.textInfo}>
                         Nome Completo
                     </Text>
 
                     <View style={SocialCadastroStyle.boxEmail}>
-
                         <TextInput
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu nome"
@@ -105,20 +129,15 @@ export const SocialCadastro = () => {
                             value={nome}
                             onChangeText={setNome}
                         />
-
                     </View>
-
                 </View>
 
-
                 <View style={SocialCadastroStyle.boxInfo}>
-
                     <Text style={SocialCadastroStyle.textInfo}>
                         Nome de usuário
                     </Text>
 
                     <View style={SocialCadastroStyle.boxEmail}>
-
                         <TextInput
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu nome de usuário"
@@ -126,20 +145,15 @@ export const SocialCadastro = () => {
                             value={usuario}
                             onChangeText={setUsuario}
                         />
-
                     </View>
-
                 </View>
 
-
                 <View style={SocialCadastroStyle.boxInfo}>
-
                     <Text style={SocialCadastroStyle.textInfo}>
                         E-mail
                     </Text>
 
                     <View style={SocialCadastroStyle.boxEmail}>
-
                         <TextInput
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Digite seu e-mail"
@@ -149,20 +163,15 @@ export const SocialCadastro = () => {
                             value={email}
                             onChangeText={setEmail}
                         />
-
                     </View>
-
                 </View>
 
-
                 <View style={SocialCadastroStyle.boxInfo}>
-
                     <Text style={SocialCadastroStyle.textInfo}>
                         Senha
                     </Text>
 
                     <View style={SocialCadastroStyle.boxEmail}>
-
                         <TextInput
                             style={SocialCadastroStyle.textEmail}
                             placeholder="Crie sua senha"
@@ -181,14 +190,10 @@ export const SocialCadastro = () => {
                                 style={SocialCadastroStyle.exibir}
                             />
                         </TouchableOpacity>
-
                     </View>
-
                 </View>
 
-
                 <View style={SocialCadastroStyle.bottomContainer}>
-
                     <TouchableOpacity
                         style={SocialCadastroStyle.buttonStart}
                         onPress={fazerCadastro}
@@ -197,12 +202,9 @@ export const SocialCadastro = () => {
                             Criar conta
                         </Text>
                     </TouchableOpacity>
-
                 </View>
 
-
                 <View style={SocialCadastroStyle.boxContainer}>
-
                     <Text style={SocialCadastroStyle.textN}>
                         Já possui uma conta?
                     </Text>
@@ -214,10 +216,8 @@ export const SocialCadastro = () => {
                             Entrar
                         </Text>
                     </TouchableOpacity>
-
                 </View>
-
             </ScrollView>
         </SafeAreaView>
-    )
-}
+    );
+};

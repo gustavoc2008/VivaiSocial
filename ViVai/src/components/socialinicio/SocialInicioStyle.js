@@ -33,15 +33,13 @@ export const SocialInicioStyle = StyleSheet.create({
     },
 
     containerFeed: {
-        width: "95%",
+        width: "94%",
+        alignSelf: "center",
         backgroundColor: "#262626",
         borderRadius: 10,
-        alignSelf: "center",
         padding: 10,
-        margin: 10,
+        marginVertical: 8,
         paddingBottom: 20,
-
-        // Permite posicionar elementos nos cantos
         position: "relative",
     },
 
@@ -54,13 +52,16 @@ export const SocialInicioStyle = StyleSheet.create({
     imgP: {
         width: 55,
         height: 55,
-        borderRadius: 100,
+        borderRadius: 27.5,
         borderWidth: 2,
+        borderColor: "#FFFFFF",
     },
 
     boxText: {
         flexDirection: "column",
         marginLeft: 10,
+        flex: 1,
+        paddingRight: 45,
     },
 
     textName: {
@@ -80,10 +81,8 @@ export const SocialInicioStyle = StyleSheet.create({
         position: "absolute",
         right: 0,
         top: 5,
-
         width: 40,
         height: 40,
-
         justifyContent: "center",
         alignItems: "center",
     },
@@ -102,16 +101,16 @@ export const SocialInicioStyle = StyleSheet.create({
         fontSize: 14,
         color: "white",
         fontWeight: "400",
+        marginHorizontal: 5,
     },
 
     imgPaisagem: {
         width: "100%",
-        height: 200,
+        aspectRatio: 1.5,
         borderRadius: 15,
         marginTop: 10,
     },
 
-    // Área dos ícones
     boxIcons: {
         flexDirection: "row",
         alignItems: "center",
@@ -119,14 +118,12 @@ export const SocialInicioStyle = StyleSheet.create({
         marginLeft: 5,
     },
 
-    // Grupo: ícone + número
     iconGroup: {
         flexDirection: "row",
         alignItems: "center",
         marginRight: 30,
     },
 
-    // Empurra o salvar para o canto direito
     iconSpacer: {
         flex: 1,
     },
@@ -152,20 +149,22 @@ export const SocialInicioStyle = StyleSheet.create({
         fontWeight: "500",
     },
 
-    // Comentário
-
+    bottomArea: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
 
     botaoCriar: {
         position: "absolute",
-
         right: 20,
-        bottom: 90,
+        bottom: 100,
 
         width: 55,
         height: 55,
 
         borderRadius: 30,
-
         backgroundColor: "#D97706",
 
         justifyContent: "center",
@@ -179,6 +178,6 @@ export const SocialInicioStyle = StyleSheet.create({
         color: "white",
         fontSize: 38,
         fontWeight: "300",
-        marginBottom: 7
+        marginBottom: 7,
     },
 });

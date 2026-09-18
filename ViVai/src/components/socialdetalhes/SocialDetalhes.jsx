@@ -9,10 +9,147 @@ import {
 
 import { SocialDetalhesStyle } from "./SocialDetalhesStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
-
+import { useLocalSearchParams, router } from "expo-router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const SocialDetalhes = () => {
+
+    const { id } = useLocalSearchParams();
+
+    const [publicacao, setPublicacao] = useState(null);
+    const [comentario, setComentario] = useState("");
+
+    const getPublicacao = async () => {
+
+        try {
+
+            const resposta = await axios.get(
+                `http://localhost:3000/publicacoes/${id}`
+            );
+
+            setPublicacao(resposta.data);
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+    };
+
+
+    const curtirPubli = async () => {
+        try {
+
+            const novoEstado = !publicacao.curtido;
+
+            const novasCurtidas = novoEstado
+                ? (publicacao?.curtidas || 0) + 1
+                : Math.max((publicacao?.curtidas || 0) - 1, 0);
+
+            await axios.patch(
+                `http://localhost:3000/publicacoes/${id}`,
+                {
+                    curtidas: novasCurtidas,
+                    curtido: novoEstado
+                }
+            );
+
+            setPublicacao({
+                ...publicacao,
+                curtidas: novasCurtidas,
+                curtido: novoEstado
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    const enviarComentario = async () => {
+
+        if (comentario.trim() == "") {
+
+            alert("Digite algo para comentar!");
+            return;
+
+        }
+
+        try {
+
+            // Pega os comentários que já existem
+            const comentariosAtuais =
+                publicacao?.listaComentarios || [];
+
+
+            // Cria o novo comentário
+            const novoComentario = {
+
+                id: Date.now(),
+
+                usuario: "Maria Eduarda",
+
+                texto: comentario,
+
+                tempo: "Agora"
+
+            };
+
+
+            // Junta os comentários antigos
+            // com o novo comentário
+            const novosComentarios = [
+                ...comentariosAtuais,
+                novoComentario
+            ];
+
+
+            // Atualiza o banco
+            await axios.patch(
+
+                `http://localhost:3000/publicacoes/${id}`,
+
+                {
+                    comentarios: novosComentarios.length,
+
+                    listaComentarios: novosComentarios
+                }
+
+            );
+
+
+            // Atualiza a tela imediatamente
+            setPublicacao({
+
+                ...publicacao,
+
+                comentarios: novosComentarios.length,
+
+                listaComentarios: novosComentarios
+
+            });
+
+
+            // Limpa o campo
+            setComentario("");
+
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    };
+
+
+    useEffect(() => {
+
+        getPublicacao();
+
+    }, []);
+
 
     return (
 
@@ -25,9 +162,13 @@ export const SocialDetalhes = () => {
                 }}
             >
 
+                {/* BOTÃO VOLTAR */}
+
                 <View style={SocialDetalhesStyle.boxIcon}>
 
-                    <TouchableOpacity onPress={() => router.back()}>
+                    <TouchableOpacity
+                        onPress={() => router.back()}
+                    >
 
                         <Image
                             source={require("../../../assets/voltar.png")}
@@ -36,18 +177,10 @@ export const SocialDetalhes = () => {
 
                     </TouchableOpacity>
 
-
-                    <TouchableOpacity>
-
-                        <Image
-                            source={require("../../../assets/pontos.png")}
-                            style={SocialDetalhesStyle.icon}
-                        />
-
-                    </TouchableOpacity>
-
                 </View>
 
+
+                {/* PUBLICAÇÃO */}
 
                 <View style={SocialDetalhesStyle.containerFeed}>
 
@@ -60,91 +193,139 @@ export const SocialDetalhes = () => {
 
                         <View style={SocialDetalhesStyle.boxText}>
 
-                            <Text style={SocialDetalhesStyle.textName}>
-                                Gustavo Costa
+                            <Text
+                                style={SocialDetalhesStyle.textName}
+                            >
+                                {publicacao?.usuario}
                             </Text>
 
-                            <Text style={SocialDetalhesStyle.textHora}>
-                                Há 2 horas
+                            <Text
+                                style={SocialDetalhesStyle.textHora}
+                            >
+                                {publicacao?.tempo}
                             </Text>
 
                         </View>
 
                     </View>
 
+
                     <View style={SocialDetalhesStyle.boxPubli}>
 
-                        <Text style={SocialDetalhesStyle.textDesc}>
-                            Aproveitando o final de semana
+                        <Text
+                            style={SocialDetalhesStyle.textDesc}
+                        >
+                            {publicacao?.descricao}
                         </Text>
 
-                        <Text style={SocialDetalhesStyle.textDesc}>
-                            Dias leves são os melhores.
-                        </Text>
+
+                        {publicacao?.imagem?.[0] && (
+                            <Image
+                                source={{
+                                    uri: publicacao.imagem[0]
+                                }}
+                                style={SocialDetalhesStyle.imgPaisagem}
+                            />
+                        )}
 
 
-                        <Image
-                            source={require("../../../assets/helipa.jpg")}
-                            style={SocialDetalhesStyle.imgPaisagem}
-                        />
-
+                        {/* ÍCONES */}
 
                         <View style={SocialDetalhesStyle.boxIcons}>
 
-                            <TouchableOpacity>
+                            {/* CURTIDAS */}
 
-                                <View style={SocialDetalhesStyle.iconGroup}>
+                            <TouchableOpacity onPress={curtirPubli}>
+
+                                <View
+                                    style={
+                                        SocialDetalhesStyle.iconGroup
+                                    }
+                                >
 
                                     <Image
                                         source={require("../../../assets/coracao.png")}
-                                        style={SocialDetalhesStyle.icons}
+                                        style={[
+                                            SocialDetalhesStyle.icons,
+                                            publicacao?.curtido && {
+                                                tintColor: "red"
+                                            }
+                                        ]}
                                     />
 
-                                    <Text style={SocialDetalhesStyle.iconText}>
-                                        24
+                                    <Text
+                                        style={
+                                            SocialDetalhesStyle.iconText
+                                        }
+                                    >
+                                        {publicacao?.curtidas || 0}
                                     </Text>
 
                                 </View>
 
                             </TouchableOpacity>
 
+
+                            {/* COMENTÁRIOS */}
 
                             <TouchableOpacity>
 
-                                <View style={SocialDetalhesStyle.iconGroup}>
+                                <View
+                                    style={
+                                        SocialDetalhesStyle.iconGroup
+                                    }
+                                >
 
                                     <Image
                                         source={require("../../../assets/comentario.png")}
-                                        style={SocialDetalhesStyle.icons}
+                                        style={
+                                            SocialDetalhesStyle.icons
+                                        }
                                     />
 
-                                    <Text style={SocialDetalhesStyle.iconText}>
-                                        5
+                                    <Text
+                                        style={
+                                            SocialDetalhesStyle.iconText
+                                        }
+                                    >
+                                        {publicacao?.listaComentarios?.length || 0}
                                     </Text>
 
                                 </View>
 
                             </TouchableOpacity>
 
+
+                            {/* ENVIAR */}
 
                             <TouchableOpacity>
 
                                 <Image
                                     source={require("../../../assets/enviar.png")}
-                                    style={SocialDetalhesStyle.icons}
+                                    style={
+                                        SocialDetalhesStyle.icons
+                                    }
                                 />
 
                             </TouchableOpacity>
 
 
-                            <View style={SocialDetalhesStyle.iconSpacer} />
+                            <View
+                                style={
+                                    SocialDetalhesStyle.iconSpacer
+                                }
+                            />
 
+
+                            {/* SALVAR */}
 
                             <TouchableOpacity>
 
                                 <Image
                                     source={require("../../../assets/salvar.png")}
-                                    style={SocialDetalhesStyle.icons}
+                                    style={
+                                        SocialDetalhesStyle.icons
+                                    }
                                 />
 
                             </TouchableOpacity>
@@ -152,86 +333,97 @@ export const SocialDetalhes = () => {
                         </View>
 
 
-                        <View style={SocialDetalhesStyle.divisao} />
+                        {/* DIVISÃO */}
+
+                        <View
+                            style={
+                                SocialDetalhesStyle.divisao
+                            }
+                        />
 
 
-                        <Text style={SocialDetalhesStyle.text}>
+                        {/* TÍTULO */}
+
+                        <Text
+                            style={SocialDetalhesStyle.text}
+                        >
                             Comentários
                         </Text>
 
 
-                        <View style={SocialDetalhesStyle.boxComent}>
+                        {/* LISTA DE COMENTÁRIOS */}
 
-                            <Image
-                                source={require("../../../assets/pessoa2.png")}
-                                style={SocialDetalhesStyle.imgP}
-                            />
+                        {publicacao?.listaComentarios?.map(
+                            (item, index) => (
 
-                            <View style={SocialDetalhesStyle.boxComentTexto}>
+                                <View
+                                    key={item.id || index}
+                                    style={
+                                        SocialDetalhesStyle.boxComent
+                                    }
+                                >
 
-                                <Text style={SocialDetalhesStyle.textName}>
-                                    Maria Eduarda
-                                </Text>
+                                    <Image
+                                        source={require("../../../assets/pessoa.jpeg")}
+                                        style={
+                                            SocialDetalhesStyle.imgP
+                                        }
+                                    />
 
-                                <Text style={SocialDetalhesStyle.textHora}>
-                                    Há 1 hora
-                                </Text>
+                                    <View
+                                        style={
+                                            SocialDetalhesStyle.boxComentTexto
+                                        }
+                                    >
 
-                                <Text style={SocialDetalhesStyle.textDesc}>
-                                    Que lugar lindo! 😍
-                                </Text>
+                                        <Text
+                                            style={
+                                                SocialDetalhesStyle.textName
+                                            }
+                                        >
+                                            {item.usuario}
+                                        </Text>
 
-                            </View>
+                                        <Text
+                                            style={
+                                                SocialDetalhesStyle.textHora
+                                            }
+                                        >
+                                            {item.tempo}
+                                        </Text>
 
-                            <TouchableOpacity
-                                style={SocialDetalhesStyle.boxComentLike}
-                            >
+                                        <Text
+                                            style={
+                                                SocialDetalhesStyle.textDesc
+                                            }
+                                        >
+                                            {item.texto}
+                                        </Text>
 
-                                <Image
-                                    source={require("../../../assets/coracao.png")}
-                                    style={SocialDetalhesStyle.imgC}
-                                />
-
-                            </TouchableOpacity>
-
-                        </View>
+                                    </View>
 
 
-                        <View style={SocialDetalhesStyle.boxComent}>
+                                    {/* CORAÇÃO DO COMENTÁRIO */}
 
-                            <Image
-                                source={require("../../../assets/pessoa.jpeg")}
-                                style={SocialDetalhesStyle.imgP}
-                            />
+                                    <TouchableOpacity
+                                        style={
+                                            SocialDetalhesStyle.boxComentLike
+                                        }
+                                    >
 
-                            <View style={SocialDetalhesStyle.boxComentTexto}>
+                                        <Image
+                                            source={require("../../../assets/coracao.png")}
+                                            style={
+                                                SocialDetalhesStyle.imgC
+                                            }
+                                        />
 
-                                <Text style={SocialDetalhesStyle.textName}>
-                                    Carlos Lima
-                                </Text>
+                                    </TouchableOpacity>
 
-                                <Text style={SocialDetalhesStyle.textHora}>
-                                    Há 30 min
-                                </Text>
+                                </View>
 
-                                <Text style={SocialDetalhesStyle.textDesc}>
-                                    Perfeito demais! 👋
-                                </Text>
-
-                            </View>
-
-                            <TouchableOpacity
-                                style={SocialDetalhesStyle.boxComentLike}
-                            >
-
-                                <Image
-                                    source={require("../../../assets/coracao.png")}
-                                    style={SocialDetalhesStyle.imgC}
-                                />
-
-                            </TouchableOpacity>
-
-                        </View>
+                            )
+                        )}
 
                     </View>
 
@@ -240,28 +432,44 @@ export const SocialDetalhes = () => {
             </ScrollView>
 
 
-            <View style={SocialDetalhesStyle.barraComentario}>
+            {/* BARRA DE COMENTÁRIO */}
+
+            <View
+                style={
+                    SocialDetalhesStyle.barraComentario
+                }
+            >
 
                 <TextInput
-                    style={SocialDetalhesStyle.inputComentario}
+                    style={
+                        SocialDetalhesStyle.inputComentario
+                    }
                     placeholder="Adicione um comentário..."
                     placeholderTextColor="#888"
+                    value={comentario}
+                    onChangeText={setComentario}
                 />
 
+
                 <TouchableOpacity
-                    style={SocialDetalhesStyle.botaoEnviar}
+                    style={
+                        SocialDetalhesStyle.botaoEnviar
+                    }
+                    onPress={enviarComentario}
                 >
 
                     <Image
                         source={require("../../../assets/enviar.png")}
-                        style={SocialDetalhesStyle.iconEnviar}
+                        style={
+                            SocialDetalhesStyle.iconEnviar
+                        }
                     />
 
                 </TouchableOpacity>
 
             </View>
+
         </SafeAreaView>
 
     );
-
-};
+};  

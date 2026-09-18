@@ -4,15 +4,16 @@ export const BottomNavStyle = StyleSheet.create({
 
     container: {
         height: 75,
+        width: "100%",
         backgroundColor: "#111111",
-        borderWidth: 1,
+        borderTopWidth: 1,
         borderColor: "#333333",
 
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "center",
 
-        paddingHorizontal: 5,
+        paddingHorizontal: 2,
     },
 
     item: {
@@ -20,11 +21,12 @@ export const BottomNavStyle = StyleSheet.create({
         height: "100%",
         alignItems: "center",
         justifyContent: "center",
+        minWidth: 0,
     },
 
     icon: {
-        width: 25,
-        height: 25,
+        width: 24,
+        height: 24,
         marginBottom: 5,
         tintColor: "#FFFFFF",
         resizeMode: "contain",
@@ -35,7 +37,8 @@ export const BottomNavStyle = StyleSheet.create({
     },
 
     text: {
-        fontSize: 12,
+        width: "100%",
+        fontSize: 11,
         color: "#FFFFFF",
         textAlign: "center",
     },
