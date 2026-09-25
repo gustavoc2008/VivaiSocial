@@ -43,20 +43,77 @@ export const SocialDetalhesStyle = StyleSheet.create({
 
     boxText: {
         flexDirection: "column",
-        marginLeft: 10,
+        marginLeft: 12,
+        flex: 1,
+        justifyContent: "center",
     },
 
     textName: {
         fontSize: 16,
         color: "white",
-        fontWeight: "400",
+        fontWeight: "600",
+    },
+
+    boxLocalizacao: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 2,
+        marginBottom: 2,
+        alignSelf: "flex-start",
+    },
+
+    iconLocFeed: {
+        width: 13,
+        height: 13,
+        tintColor: "#D97706",
+        marginRight: 4,
+        resizeMode: "contain",
+    },
+
+    textLocalizacao: {
+        fontSize: 13,
+        color: "#D97706",
+        fontWeight: "500",
+        flexShrink: 1,
     },
 
     textHora: {
-        fontSize: 14,
-        color: "white",
+        fontSize: 12,
+        color: "#9CA3AF",
         fontWeight: "400",
-        opacity: 0.5,
+    },
+
+    badgeMaps: {
+        position: "absolute",
+        bottom: 12,
+        right: 12,
+        backgroundColor: "rgba(23, 23, 23, 0.85)",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: "rgba(217, 119, 6, 0.6)",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+        elevation: 4,
+    },
+
+    badgeMapsIcon: {
+        width: 12,
+        height: 12,
+        tintColor: "#D97706",
+        marginRight: 5,
+        resizeMode: "contain",
+    },
+
+    badgeMapsText: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        fontWeight: "600",
     },
 
     boxPubli: {
@@ -98,6 +155,10 @@ export const SocialDetalhesStyle = StyleSheet.create({
         width: 24,
         height: 24,
         tintColor: "white",
+    },
+
+    iconSalvo: {
+        tintColor: "#FFD000",
     },
 
     iconText: {

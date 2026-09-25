@@ -8,18 +8,53 @@ import {
 } from "react-native";
 
 import { SocialCriarStyle } from "./SocialCriarStyle";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
+import { API_URL } from "../../services/json";
+import { useAuth } from "../../context/Context";
+import {
+    getLocalizacaoParaPublicacao,
+    limparLocalizacaoParaPublicacao,
+    subscribeLocalizacao,
+} from "../../services/localizacaoStore";
 
 export const SocialCriar = () => {
 
     const router = useRouter();
+    const params = useLocalSearchParams();
+    const { usuarioLogado } = useAuth();
 
     const [descricao, setDescricao] = useState("");
     const [imagens, setImagens] = useState([]);
+    const [localizacaoSelecionada, setLocalizacaoSelecionada] = useState(() => {
+        const guardada = getLocalizacaoParaPublicacao();
+        if (guardada) return guardada;
+        if (params.localizacao) {
+            return {
+                nome: params.localizacao,
+                endereco: params.endereco || "",
+            };
+        }
+        return null;
+    });
+
+    useEffect(() => {
+        const unsubscribe = subscribeLocalizacao((loc) => {
+            setLocalizacaoSelecionada(loc);
+        });
+
+        if (params.localizacao) {
+            setLocalizacaoSelecionada({
+                nome: params.localizacao,
+                endereco: params.endereco || "",
+            });
+        }
+
+        return () => unsubscribe();
+    }, [params.localizacao, params.endereco]);
 
     const fazerPubli = async () => {
 
@@ -31,10 +66,14 @@ export const SocialCriar = () => {
         try {
 
             const novaPublicacao = {
-                usuario: "Gustavo Costa",
+                usuario: usuarioLogado?.nome || "Gustavo Costa",
                 tempo: "Agora",
                 descricao: descricao,
                 imagem: imagens,
+                localizacao: localizacaoSelecionada ? localizacaoSelecionada.nome : null,
+                endereco: localizacaoSelecionada?.endereco || null,
+                latitude: localizacaoSelecionada?.latitude ?? null,
+                longitude: localizacaoSelecionada?.longitude ?? null,
                 curtidas: 0,
                 comentarios: 0,
                 listaComentarios: []
@@ -43,7 +82,7 @@ export const SocialCriar = () => {
             console.log("ENVIANDO PUBLICAÇÃO...");
 
             const resposta = await axios.post(
-                "http://localhost:3000/publicacoes",
+                `${API_URL}/publicacoes`,
                 novaPublicacao,
                 {
                     headers: {
@@ -60,6 +99,8 @@ export const SocialCriar = () => {
 
             setDescricao("");
             setImagens([]);
+            setLocalizacaoSelecionada(null);
+            limparLocalizacaoParaPublicacao();
 
             router.push("/vivai/inicio");
 
@@ -244,40 +285,59 @@ export const SocialCriar = () => {
 
                 {/* LOCALIZAÇÃO */}
 
-                <View>
+                <View style={SocialCriarStyle.boxLocalizacao}>
 
-                    <TouchableOpacity
-                        onPress={() =>
-                            router.push(
-                                "/vivai/localizacao"
-                            )
-                        }
-                    >
+                    {localizacaoSelecionada ? (
+                        <View style={SocialCriarStyle.cardLocalizacaoSelecionada}>
+                            <View style={SocialCriarStyle.localizacaoInfo}>
+                                <Image
+                                    source={require("../../../assets/localizacao.png")}
+                                    style={SocialCriarStyle.iconLocalizacaoAtiva}
+                                />
+                                <View style={SocialCriarStyle.localizacaoTextos}>
+                                    <Text style={SocialCriarStyle.localizacaoNome} numberOfLines={1}>
+                                        {localizacaoSelecionada.nome}
+                                    </Text>
+                                    {localizacaoSelecionada.endereco ? (
+                                        <Text style={SocialCriarStyle.localizacaoSub} numberOfLines={1}>
+                                            {localizacaoSelecionada.endereco}
+                                        </Text>
+                                    ) : null}
+                                </View>
+                            </View>
 
-                        <View
-                            style={
-                                SocialCriarStyle.viewT
-                            }
-                        >
-
-                            <Image
-                                source={require("../../../assets/localizacao.png")}
-                                style={
-                                    SocialCriarStyle.icon
-                                }
-                            />
-
-                            <Text
-                                style={
-                                    SocialCriarStyle.text2
-                                }
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setLocalizacaoSelecionada(null);
+                                    limparLocalizacaoParaPublicacao();
+                                }}
+                                style={SocialCriarStyle.removerLocalizacao}
+                                activeOpacity={0.7}
                             >
-                                Adicionar localização
-                            </Text>
-
+                                <Text style={SocialCriarStyle.removerTexto}>✕</Text>
+                            </TouchableOpacity>
                         </View>
-
-                    </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={() =>
+                                router.push({
+                                    pathname: "/vivai/localizacao",
+                                    params: { origem: "criar" }
+                                })
+                            }
+                            activeOpacity={0.7}
+                        >
+                            <View style={SocialCriarStyle.viewT}>
+                                <Image
+                                    source={require("../../../assets/localizacao.png")}
+                                    style={SocialCriarStyle.icon}
+                                />
+                                <Text style={SocialCriarStyle.text2}>
+                                    Adicionar localização
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    )}
 
                 </View>
 

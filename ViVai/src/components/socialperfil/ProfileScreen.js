@@ -24,11 +24,11 @@ export const SocialPerfil = () => {
 
 
   const POSTS = [
-    require("../../../assets/cafe.jpg"),
+    require("../../../assets/ibira.jpg"),
     require("../../../assets/sol.jpg"),
+    require("../../../assets/paulista.jpg"),
     require("../../../assets/cidade.jpg"),
-    require("../../../assets/cidade.jpg"),
-    require("../../../assets/cafe.jpg"),
+    require("../../../assets/masp.jpg"),
     require("../../../assets/airbnb.jpg"),
   ];
 
@@ -364,22 +364,7 @@ export const SocialPerfil = () => {
       </ScrollView>
 
 
-      {/* =========================
-                BOTÃO FLUTUANTE
-            ========================= */}
 
-      <TouchableOpacity
-        style={styles.botaoCriar}
-        onPress={() =>
-          router.push("/vivai/criar")
-        }
-      >
-
-        <Text style={styles.textoMais}>
-          +
-        </Text>
-
-      </TouchableOpacity>
 
 
       {/* =========================
@@ -643,42 +628,5 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-
-  /* =========================
-     BOTÃO +
-  ========================= */
-
-  botaoCriar: {
-    position: "absolute",
-
-    right: 20,
-
-    bottom: 90,
-
-    width: 55,
-    height: 55,
-
-    borderRadius: 30,
-
-    backgroundColor: "#D97706",
-
-    justifyContent: "center",
-    alignItems: "center",
-
-    zIndex: 100,
-
-    elevation: 10,
-  },
-
-
-  textoMais: {
-    color: "white",
-
-    fontSize: 38,
-
-    fontWeight: "300",
-
-    marginBottom: 7,
-  },
 
 }); 

@@ -150,7 +150,7 @@ export default function ConfiguracoesScreen() {
 
         <TouchableOpacity
           style={styles.botaoSair}
-          onPress={() => router.back()}
+          onPress={() => router.push('/vivai')}
         >
 
           <Ionicons

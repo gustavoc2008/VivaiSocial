@@ -1,33 +1,101 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
-
+export const NotificacoesStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#17181b",
+        backgroundColor: "#171717",
     },
 
     header: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 18,
-        paddingTop: 12,
-        paddingBottom: 8,
+        paddingHorizontal: 16,
+        paddingTop: 10,
+        paddingBottom: 12,
+    },
+
+    headerLeft: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    backButton: {
+        padding: 4,
+        marginRight: 8,
+    },
+
+    backIcon: {
+        width: 24,
+        height: 24,
+        tintColor: "#FFFFFF",
     },
 
     titulo: {
-        color: "#f3f5f5",
-        fontSize: 26,
+        color: "#FFFFFF",
+        fontSize: 22,
         fontWeight: "700",
-        letterSpacing: -0.4,
+        letterSpacing: -0.3,
     },
 
     marcar: {
-        color: "#f28b2d",
+        color: "#D97706",
         fontSize: 12,
         fontWeight: "600",
-        marginLeft: 12,
+    },
+
+    marcarDesabilitado: {
+        color: "#555555",
+        fontSize: 12,
+        fontWeight: "500",
+    },
+
+    tabsContainer: {
+        flexDirection: "row",
+        paddingHorizontal: 16,
+        marginBottom: 10,
+    },
+
+    tab: {
+        paddingHorizontal: 14,
+        paddingVertical: 6,
+        borderRadius: 20,
+        backgroundColor: "#262626",
+        borderWidth: 1,
+        borderColor: "#333333",
+        flexDirection: "row",
+        alignItems: "center",
+        marginRight: 8,
+    },
+
+    tabAtiva: {
+        backgroundColor: "rgba(217, 119, 6, 0.15)",
+        borderColor: "#D97706",
+    },
+
+    tabTexto: {
+        color: "#888888",
+        fontSize: 13,
+        fontWeight: "500",
+    },
+
+    tabTextoAtivo: {
+        color: "#D97706",
+        fontWeight: "700",
+    },
+
+    tabBadge: {
+        backgroundColor: "#D97706",
+        borderRadius: 10,
+        paddingHorizontal: 6,
+        paddingVertical: 1,
+        marginLeft: 6,
+    },
+
+    tabBadgeTexto: {
+        color: "#FFFFFF",
+        fontSize: 10,
+        fontWeight: "700",
     },
 
     lista: {
@@ -35,48 +103,65 @@ const styles = StyleSheet.create({
     },
 
     listaContent: {
-        paddingBottom: 8,
+        paddingBottom: 100,
     },
 
     notificacao: {
-        minHeight: 86,
-        width: "100%",
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: 16,
-        paddingVertical: 10,
+        paddingVertical: 13,
+        borderBottomWidth: 1,
+        borderBottomColor: "#222222",
     },
 
-    iconeContainer: {
-        width: 34,
-        height: 34,
-        alignItems: "center",
-        justifyContent: "center",
-        marginRight: 10,
+    notificacaoNaoLida: {
+        backgroundColor: "rgba(217, 119, 6, 0.05)",
     },
 
-    icone: {
-        width: 26,
-        height: 26,
-        resizeMode: "contain",
-        tintColor: "#f28931",
-    },
-
-    avatar: {
-        width: 42,
-        height: 42,
-        borderRadius: 21,
-        alignItems: "center",
-        justifyContent: "center",
+    avatarContainer: {
+        position: "relative",
         marginRight: 12,
-        borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.14)",
     },
 
-    avatarTexto: {
-        color: "#ffffff",
-        fontSize: 16,
+    avatarImg: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: "#262626",
+    },
+
+    avatarInicial: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    avatarInicialTexto: {
+        color: "#FFFFFF",
+        fontSize: 18,
         fontWeight: "700",
+    },
+
+    tipoIconeBadge: {
+        position: "absolute",
+        bottom: -2,
+        right: -2,
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 1.5,
+        borderColor: "#171717",
+    },
+
+    tipoIcone: {
+        width: 11,
+        height: 11,
+        resizeMode: "contain",
     },
 
     conteudo: {
@@ -85,32 +170,90 @@ const styles = StyleSheet.create({
     },
 
     mensagem: {
-        color: "#d8d8d8",
-        fontSize: 17,
-        lineHeight: 24,
-        fontWeight: "500",
+        color: "#D4D4D4",
+        fontSize: 14,
+        lineHeight: 20,
     },
 
     nome: {
-        color: "#f4f4f4",
+        color: "#FFFFFF",
         fontWeight: "700",
     },
 
     tempo: {
-        color: "#b8b8b8",
-        fontSize: 14,
+        color: "#888888",
+        fontSize: 12,
         marginTop: 4,
     },
 
-    ponto: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: "#f28b2d",
+    comentarioBox: {
+        backgroundColor: "#222222",
+        borderLeftWidth: 3,
+        borderLeftColor: "#D97706",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 4,
+        marginTop: 5,
+        marginBottom: 3,
+    },
+
+    comentarioTexto: {
+        color: "#F3F4F6",
+        fontSize: 13,
+        fontStyle: "italic",
+        lineHeight: 18,
+    },
+
+    publiThumbnail: {
+        width: 44,
+        height: 44,
+        borderRadius: 6,
+        backgroundColor: "#262626",
         marginLeft: 10,
     },
 
-})
+    ponto: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: "#D97706",
+        marginLeft: 8,
+    },
 
-export const NotificacoesStyle = styles;
-export default styles;
+    emptyContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 100,
+        paddingHorizontal: 24,
+    },
+
+    emptyIcon: {
+        width: 52,
+        height: 52,
+        tintColor: "#444444",
+        marginBottom: 14,
+    },
+
+    emptyText: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        fontWeight: "600",
+        marginBottom: 4,
+        textAlign: "center",
+    },
+
+    emptySubtext: {
+        color: "#888888",
+        fontSize: 13,
+        textAlign: "center",
+    },
+
+    loadingContainer: {
+        paddingVertical: 50,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+});
+
+export const styles = NotificacoesStyle;
+export default NotificacoesStyle;

@@ -1,7 +1,100 @@
-export const notificacoes = [
-  { nome: 'João Silva', mensagem: 'curtiu sua publicação.', tempo: 'Há 2 min', tipo: 'curtida', inicial: 'J', cor: '#6f4b35', naoLida: true },
-  { nome: 'Maria Oliveira', mensagem: 'comentou sua publicação: “Lindo!”', tempo: 'Há 10 min', tipo: 'comentario', inicial: 'M', cor: '#7c553e', naoLida: true },
-  { nome: 'Carlos Lima', mensagem: 'começou a seguir você.', tempo: 'Há 30 min', tipo: 'seguir', inicial: 'C', cor: '#6a4432', naoLida: false },
-  { nome: 'Ana Paula', mensagem: 'curtiu sua publicação.', tempo: 'Há 1 hora', tipo: 'curtida', inicial: 'A', cor: '#9b654f', naoLida: false },
-  { nome: 'Lucas', mensagem: 'comentou sua publicação: “Perfeito!”', tempo: 'Há 2 horas', tipo: 'comentario', inicial: 'L', cor: '#704a37', naoLida: false },
+export const notificacoesIniciais = [
+  {
+    id: 1,
+    nome: "Maria Eduarda",
+    usuario: "cordeiro_makk",
+    foto: "maria.jpeg",
+    mensagem: "curtiu sua publicação.",
+    tempo: "Há 5 min",
+    tipo: "curtida",
+    inicial: "M",
+    cor: "#D97706",
+    lida: false,
+    publicacaoId: 1,
+    publicacaoImagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: 2,
+    nome: "Lucas Henrique",
+    usuario: "lucas.henrique",
+    foto: "lucas.jpeg",
+    mensagem: "comentou: “Ficou muito boa essa foto!”",
+    comentarioTexto: "Ficou muito boa essa foto!",
+    tempo: "Há 15 min",
+    tipo: "comentario",
+    inicial: "L",
+    cor: "#B45309",
+    lida: false,
+    publicacaoId: 1,
+    publicacaoImagem: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: 3,
+    nome: "Ana Beatriz",
+    usuario: "anabeatriz",
+    foto: "beatriz.jpeg",
+    mensagem: "começou a seguir você.",
+    tempo: "Há 45 min",
+    tipo: "seguir",
+    inicial: "A",
+    cor: "#F59E0B",
+    lida: false
+  },
+  {
+    id: 4,
+    nome: "Rafael Santos",
+    usuario: "rafael.santos",
+    foto: "rafael.jpeg",
+    mensagem: "curtiu sua publicação.",
+    tempo: "Há 2 horas",
+    tipo: "curtida",
+    inicial: "R",
+    cor: "#92400E",
+    lida: true,
+    publicacaoId: 2,
+    publicacaoImagem: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: 5,
+    nome: "Julia Martins",
+    usuario: "julia.martins",
+    foto: "julia.jpeg",
+    mensagem: "comentou: “Lugar incrível 😍”",
+    comentarioTexto: "Lugar incrível 😍",
+    tempo: "Há 4 horas",
+    tipo: "comentario",
+    inicial: "J",
+    cor: "#D97706",
+    lida: true,
+    publicacaoId: 2,
+    publicacaoImagem: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: 6,
+    nome: "Pedro Almeida",
+    usuario: "pedro.almeida",
+    foto: "pedro.jpeg",
+    mensagem: "começou a seguir você.",
+    tempo: "Ontem",
+    tipo: "seguir",
+    inicial: "P",
+    cor: "#78350F",
+    lida: true
+  },
+  {
+    id: 7,
+    nome: "Camila Oliveira",
+    usuario: "camila_olv",
+    foto: "pessoa2.png",
+    mensagem: "curtiu sua publicação.",
+    tempo: "Há 2 dias",
+    tipo: "curtida",
+    inicial: "C",
+    cor: "#D97706",
+    lida: true,
+    publicacaoId: 8,
+    publicacaoImagem: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80"
+  }
 ];
+
+export const notificacoes = notificacoesIniciais;

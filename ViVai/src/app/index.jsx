@@ -21,33 +21,29 @@ export default function Index() {
 
         } else {
 
-            router.replace("/vivai/login");
+            router.replace("/vivai");
 
         }
 
     }, [usuarioLogado, carregando]);
 
-    if (carregando) {
+    return (
 
-        return (
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: "#171717",
+                justifyContent: "center",
+                alignItems: "center"
+            }}
+        >
 
-            <View
-                style={{
-                    flex: 1,
-                    backgroundColor: "#171717",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}
-            >
+            <ActivityIndicator
+                size="large"
+                color="#D97706"
+            />
 
-                <ActivityIndicator
-                    size="large"
-                    color="#D97706"
-                />
+        </View>
 
-            </View>
-
-        );
-
-    }
+    );
 }

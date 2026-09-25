@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import axios from "axios";
+import { API_URL } from "../../services/json";
 
 import { SocialEsqueciStyle } from "./SocialEsqueciStyle";
 
@@ -50,7 +51,7 @@ export const SocialEsqueci = () => {
 
             // Busca os usuários
             const resposta = await axios.get(
-                "http://localhost:3000/usuarios"
+                `${API_URL}/usuarios`
             );
 
 
@@ -71,7 +72,7 @@ export const SocialEsqueci = () => {
 
             // Atualiza a senha no json-server
             await axios.patch(
-                `http://localhost:3000/usuarios/${usuario.id}`,
+                `${API_URL}/usuarios/${usuario.id}`,
                 {
                     senha: senha
                 }

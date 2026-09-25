@@ -13,7 +13,7 @@ import { SocialFormStyle } from "./SocialFormStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import axios from "axios";
+import { api } from "../../services/json";
 import { useAuth } from "../../context/Context";
 
 export const SocialForm = () => {
@@ -38,10 +38,14 @@ export const SocialForm = () => {
         }
 
         try {
-            const resposta = await axios.get("http://192.168.137.1:3000/usuarios")
+            const resposta = await api.get("/usuarios")
 
+            const emailFormatado = email.trim().toLowerCase();
             const usuario = resposta.data.filter(
-                (item) => (item.email == email || item.usuario == email) && item.senha == senha
+                (item) =>
+                    (item.email?.toLowerCase() == emailFormatado ||
+                     item.usuario?.toLowerCase() == emailFormatado) &&
+                    item.senha == senha
             )
 
             if (usuario.length > 0) {
@@ -53,7 +57,8 @@ export const SocialForm = () => {
                 )
             }
         } catch (error) {
-            console.log("Erro ao fazer login");
+            console.log("Erro ao fazer login:", error);
+            alert("Erro ao conectar com o servidor.");
         }
     }
 

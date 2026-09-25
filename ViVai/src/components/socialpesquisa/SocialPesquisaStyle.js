@@ -99,6 +99,67 @@ export const SocialPesquisaStyle = StyleSheet.create({
         borderColor: "#3A3A3A",
     },
 
+    gridAlta: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        width: "100%",
+        marginTop: 5,
+    },
+
+    itemGrid: {
+        width: "31.5%",
+        aspectRatio: 1,
+        marginBottom: 10,
+        borderRadius: 10,
+        overflow: "hidden",
+        position: "relative",
+        borderWidth: 1,
+        borderColor: "#3A3A3A",
+        backgroundColor: "#262626",
+    },
+
+    imgGrid: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover",
+    },
+
+    overlayNomeLugar: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        paddingVertical: 3,
+        paddingHorizontal: 4,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    textNomeLugar: {
+        color: "#FFFFFF",
+        fontSize: 10,
+        fontWeight: "600",
+        textAlign: "center",
+    },
+
+    badgeDistancia: {
+        position: "absolute",
+        top: 5,
+        right: 5,
+        backgroundColor: "rgba(217, 119, 6, 0.85)",
+        borderRadius: 4,
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+    },
+
+    textDistancia: {
+        color: "#FFFFFF",
+        fontSize: 9,
+        fontWeight: "700",
+    },
+
     boxCategorias: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -117,8 +178,13 @@ export const SocialPesquisaStyle = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
 
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderColor: "#303030",
+    },
+
+    boxCatAtivo: {
+        borderColor: "#D97706",
+        backgroundColor: "rgba(217, 119, 6, 0.15)",
     },
 
     imgCat: {
@@ -133,10 +199,15 @@ export const SocialPesquisaStyle = StyleSheet.create({
     },
 
     textCat: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: "400",
         color: "white",
         textAlign: "center",
+    },
+
+    textCatAtivo: {
+        color: "#D97706",
+        fontWeight: "600",
     },
 
     /* =========================
@@ -180,31 +251,90 @@ export const SocialPesquisaStyle = StyleSheet.create({
     /* BOTÃO SEGUIR */
 
     buttonStart: {
-        width: 90,
-        height: 45,
+        width: 85,
+        height: 38,
 
         backgroundColor: "#D97706",
 
         justifyContent: "center",
         alignItems: "center",
 
-        borderRadius: 12,
+        borderRadius: 10,
 
         marginLeft: "auto",
     },
 
     buttonStartText: {
-        fontSize: 18,
+        fontSize: 14,
         fontWeight: "600",
         color: "#FFFFFF",
+    },
+
+    buttonSeguindo: {
+        backgroundColor: "#262626",
+        borderWidth: 1,
+        borderColor: "#4A4A4A",
+    },
+
+    buttonSeguindoText: {
+        color: "#D4D4D4",
     },
 
     divisao: {
         width: "100%",
         height: 1,
         backgroundColor: "#3A3A3A",
-        marginTop: 20,
+        marginTop: 15,
         marginBottom: 15,
+    },
+
+    clearSearchBtn: {
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    clearSearchText: {
+        color: "#888888",
+        fontSize: 14,
+        fontWeight: "bold",
+    },
+
+    emptyContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 25,
+        width: "100%",
+    },
+
+    emptyText: {
+        color: "#888888",
+        fontSize: 14,
+        textAlign: "center",
+    },
+
+    loadingContainer: {
+        paddingVertical: 30,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    badgeResultados: {
+        backgroundColor: "rgba(217, 119, 6, 0.2)",
+        borderColor: "#D97706",
+        borderWidth: 1,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 8,
+        marginTop: 10,
+        marginBottom: 5,
+    },
+
+    badgeResultadosText: {
+        color: "#D97706",
+        fontSize: 12,
+        fontWeight: "500",
     },
 
 });

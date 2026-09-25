@@ -64,6 +64,84 @@ export const SocialLocStyle = StyleSheet.create({
         fontSize: 16,
     },
 
+    botaoLimparBusca: {
+        padding: 6,
+    },
+
+    textoLimparBusca: {
+        color: "#888888",
+        fontSize: 14,
+        fontWeight: "700",
+    },
+
+    cardCustomLocation: {
+        width: "90%",
+        alignSelf: "center",
+        backgroundColor: "#202020",
+        borderWidth: 1,
+        borderColor: "#D97706",
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 12,
+        marginTop: 14,
+    },
+
+    customLocationIconBox: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: "rgba(217, 119, 6, 0.15)",
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 12,
+    },
+
+    customLocationInfo: {
+        flex: 1,
+    },
+
+    customLocationTitle: {
+        color: "#FFFFFF",
+        fontSize: 15,
+        fontWeight: "700",
+    },
+
+    customLocationSub: {
+        color: "#D97706",
+        fontSize: 12,
+        marginTop: 2,
+        fontWeight: "500",
+    },
+
+    iconBoxPin: {
+        width: 50,
+        height: 50,
+        borderRadius: 8,
+        backgroundColor: "#262626",
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 12,
+    },
+
+    iconPin: {
+        width: 22,
+        height: 22,
+        tintColor: "#D97706",
+    },
+
+    emptyBusca: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 30,
+        paddingHorizontal: 20,
+    },
+
+    emptyBuscaTexto: {
+        color: "#888888",
+        fontSize: 14,
+        textAlign: "center",
+    },
 
     // LOCALIZAÇÃO
 
@@ -173,6 +251,22 @@ export const SocialLocStyle = StyleSheet.create({
         opacity: 0.65,
 
         marginLeft: 10,
+    },
+
+    botaoAdicionar: {
+        backgroundColor: "#D97706",
+        paddingHorizontal: 12,
+        paddingVertical: 7,
+        borderRadius: 6,
+        marginLeft: 8,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    botaoAdicionarTexto: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        fontWeight: "700",
     },
 
     divisao: {

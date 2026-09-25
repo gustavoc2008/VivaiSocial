@@ -133,10 +133,73 @@ export const SocialCriarStyle = StyleSheet.create({
         alignItems: "center",
     },
 
+    boxLocalizacao: {
+        width: "90%",
+        alignSelf: "center",
+        marginTop: 16,
+    },
+
+    cardLocalizacaoSelecionada: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#222222",
+        borderWidth: 1,
+        borderColor: "#D97706",
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+    },
+
+    localizacaoInfo: {
+        flexDirection: "row",
+        alignItems: "center",
+        flex: 1,
+    },
+
+    iconLocalizacaoAtiva: {
+        width: 22,
+        height: 22,
+        tintColor: "#D97706",
+    },
+
+    localizacaoTextos: {
+        marginLeft: 10,
+        flex: 1,
+    },
+
+    localizacaoNome: {
+        color: "#FFFFFF",
+        fontSize: 15,
+        fontWeight: "700",
+    },
+
+    localizacaoSub: {
+        color: "#9CA3AF",
+        fontSize: 12,
+        marginTop: 2,
+    },
+
+    removerLocalizacao: {
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: "#333333",
+        alignItems: "center",
+        justifyContent: "center",
+        marginLeft: 10,
+    },
+
+    removerTexto: {
+        color: "#D4D4D4",
+        fontSize: 13,
+        fontWeight: "700",
+    },
+
     bottomContainer: {
         width: "90%",
         alignSelf: "center",
-        marginTop: 20,
+        marginTop: 24,
         marginBottom: 30,
     },
 

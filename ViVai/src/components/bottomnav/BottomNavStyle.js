@@ -1,50 +1,48 @@
 import { StyleSheet } from "react-native";
 
 export const BottomNavStyle = StyleSheet.create({
-
     container: {
-        height: 75,
         width: "100%",
         backgroundColor: "#111111",
         borderTopWidth: 1,
-        borderColor: "#333333",
-
+        borderColor: "#262626",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center",
-
-        paddingHorizontal: 2,
+        justifyContent: "space-around",
+        paddingTop: 8,
+        paddingHorizontal: 4,
+        zIndex: 999,
+        elevation: 10,
     },
 
     item: {
         flex: 1,
-        height: "100%",
         alignItems: "center",
         justifyContent: "center",
-        minWidth: 0,
+        paddingVertical: 2,
     },
 
     icon: {
         width: 24,
         height: 24,
-        marginBottom: 5,
-        tintColor: "#FFFFFF",
+        marginBottom: 4,
+        tintColor: "#9CA3AF",
         resizeMode: "contain",
     },
 
     iconAtivo: {
-        tintColor: "#E87D18",
+        tintColor: "#D97706",
     },
 
     text: {
-        width: "100%",
         fontSize: 11,
-        color: "#FFFFFF",
+        color: "#9CA3AF",
         textAlign: "center",
+        fontWeight: "500",
     },
 
     textAtivo: {
-        color: "#E87D18",
+        color: "#D97706",
+        fontWeight: "700",
     },
-
 });

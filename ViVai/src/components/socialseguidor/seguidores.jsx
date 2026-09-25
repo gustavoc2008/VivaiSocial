@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from './SeguidoresStyle';
+import { useAuth } from '../../context/Context';
+import { criarNotificacaoSeguir } from '../../services/notificacoesService';
 
 const usuariosIniciais = [
   { nome: 'Rafaela Souza', user: '@rafa.souza', seguindo: true, cor: '#4d3d35', inicial: 'R' },
@@ -16,6 +18,7 @@ const usuariosIniciais = [
 
 export default function Seguidores() {
   const router = useRouter();
+  const { usuarioLogado } = useAuth();
   const [abaAtiva, setAbaAtiva] = useState('seguidores');
   const [usuarios, setUsuarios] = useState(usuariosIniciais);
 
@@ -28,9 +31,19 @@ export default function Seguidores() {
 
   const alternarSeguir = (nome) => {
     setUsuarios((atual) =>
-      atual.map((usuario) =>
-        usuario.nome === nome ? { ...usuario, seguindo: !usuario.seguindo } : usuario,
-      ),
+      atual.map((usuario) => {
+        if (usuario.nome === nome) {
+          const novoSeguindo = !usuario.seguindo;
+          if (novoSeguindo) {
+            criarNotificacaoSeguir({
+              usuarioAlvo: usuario,
+              usuarioLogado,
+            });
+          }
+          return { ...usuario, seguindo: novoSeguindo };
+        }
+        return usuario;
+      }),
     );
   };
 

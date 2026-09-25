@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
+import { api } from "../../services/json";
 
 import { SocialCadastroStyle } from "./SocialCadastroStyle";
 
@@ -39,22 +39,22 @@ export const SocialCadastro = () => {
 
     const fazerCadastro = async () => {
         if (
-            nome == "" ||
-            usuario == "" ||
-            email == "" ||
-            senha == ""
+            nome.trim() == "" ||
+            usuario.trim() == "" ||
+            email.trim() == "" ||
+            senha.trim() == ""
         ) {
             alert("Preencha todos os campos!");
             return;
         }
 
         try {
-            await axios.post(
-                "http://192.168.137.1:3000/usuarios",
+            await api.post(
+                "/usuarios",
                 {
-                    nome: nome,
-                    usuario: usuario,
-                    email: email,
+                    nome: nome.trim(),
+                    usuario: usuario.trim(),
+                    email: email.trim(),
                     senha: senha,
                     foto: foto
                 }
@@ -65,7 +65,7 @@ export const SocialCadastro = () => {
             router.push("/vivai/login");
         } catch (error) {
             console.log("Erro ao criar a conta:", error);
-            alert("Erro ao criar a conta.");
+            alert("Erro ao criar a conta. Verifique sua conexão com o servidor.");
         }
     };
 
@@ -92,29 +92,26 @@ export const SocialCadastro = () => {
                     </Text>
                 </View>
 
-                <View style={SocialCadastroStyle.boxCamera}>
-                    {foto ? (
-                        <Image
-                            source={{ uri: foto }}
-                            style={SocialCadastroStyle.fotoPerfil}
-                        />
-                    ) : (
-                        <Image
-                            source={require("../../../assets/camera.png")}
-                            style={SocialCadastroStyle.camera}
-                        />
-                    )}
-                </View>
+                <TouchableOpacity onPress={escolherFoto} activeOpacity={0.7}>
+                    <View style={SocialCadastroStyle.boxCamera}>
+                        {foto ? (
+                            <Image
+                                source={{ uri: foto }}
+                                style={SocialCadastroStyle.fotoPerfil}
+                            />
+                        ) : (
+                            <Image
+                                source={require("../../../assets/camera.png")}
+                                style={SocialCadastroStyle.camera}
+                            />
+                        )}
+                    </View>
 
-
-
-                <TouchableOpacity onPress={escolherFoto}>
                     <Text style={SocialCadastroStyle.textEsqueceu}>
                         {foto ? "Trocar foto" : "Adicionar foto"}
                     </Text>
                 </TouchableOpacity>
 
-                
 
                 <View style={SocialCadastroStyle.boxInfo}>
                     <Text style={SocialCadastroStyle.textInfo}>

@@ -50,31 +50,87 @@ export const SocialInicioStyle = StyleSheet.create({
     },
 
     imgP: {
-        width: 55,
-        height: 55,
-        borderRadius: 27.5,
+        width: 52,
+        height: 52,
+        borderRadius: 26,
         borderWidth: 2,
         borderColor: "#FFFFFF",
     },
 
     boxText: {
         flexDirection: "column",
-        marginLeft: 10,
+        marginLeft: 12,
         flex: 1,
         paddingRight: 45,
+        justifyContent: "center",
     },
 
     textName: {
         fontSize: 16,
         color: "white",
-        fontWeight: "400",
+        fontWeight: "600",
+    },
+
+    boxLocalizacao: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 2,
+        marginBottom: 2,
+        alignSelf: "flex-start",
+    },
+
+    iconLocFeed: {
+        width: 13,
+        height: 13,
+        tintColor: "#D97706",
+        marginRight: 4,
+        resizeMode: "contain",
+    },
+
+    textLocalizacao: {
+        fontSize: 13,
+        color: "#D97706",
+        fontWeight: "500",
+        flexShrink: 1,
     },
 
     textHora: {
-        fontSize: 14,
-        color: "white",
+        fontSize: 12,
+        color: "#9CA3AF",
         fontWeight: "400",
-        opacity: 0.5,
+    },
+
+    badgeMaps: {
+        position: "absolute",
+        bottom: 12,
+        right: 12,
+        backgroundColor: "rgba(23, 23, 23, 0.85)",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: "rgba(217, 119, 6, 0.6)",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+        elevation: 4,
+    },
+
+    badgeMapsIcon: {
+        width: 12,
+        height: 12,
+        tintColor: "#D97706",
+        marginRight: 5,
+        resizeMode: "contain",
+    },
+
+    badgeMapsText: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        fontWeight: "600",
     },
 
     botaoPontos: {
@@ -158,26 +214,23 @@ export const SocialInicioStyle = StyleSheet.create({
 
     botaoCriar: {
         position: "absolute",
-        right: 20,
-        bottom: 100,
+        right: 18,
+        bottom: 16,
 
-        width: 55,
-        height: 55,
+        width: 56,
+        height: 56,
 
-        borderRadius: 30,
+        borderRadius: 28,
         backgroundColor: "#D97706",
 
         justifyContent: "center",
         alignItems: "center",
 
-        zIndex: 100,
-        elevation: 10,
-    },
-
-    textoMais: {
-        color: "white",
-        fontSize: 38,
-        fontWeight: "300",
-        marginBottom: 7,
+        zIndex: 999,
+        elevation: 8,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.35,
+        shadowRadius: 6,
     },
 });
