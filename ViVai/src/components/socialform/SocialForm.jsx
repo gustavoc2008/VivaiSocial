@@ -63,7 +63,7 @@ export const SocialForm = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#171717" }}>
 
             <ScrollView
                 style={SocialFormStyle.container}

@@ -5,6 +5,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    StatusBar,
 } from "react-native";
 
 import { SocialCriarStyle } from "./SocialCriarStyle";
@@ -67,6 +68,8 @@ export const SocialCriar = () => {
 
             const novaPublicacao = {
                 usuario: usuarioLogado?.nome || "Gustavo Costa",
+                usuarioId: usuarioLogado?.id || null,
+                nomeUsuario: usuarioLogado?.usuario || null,
                 tempo: "Agora",
                 descricao: descricao,
                 imagem: imagens,
@@ -150,10 +153,13 @@ export const SocialCriar = () => {
 
     return (
 
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#171717" }} edges={["top", "bottom", "left", "right"]}>
+            <StatusBar barStyle="light-content" backgroundColor="#171717" />
 
             <ScrollView
                 style={SocialCriarStyle.container}
+                contentContainerStyle={{ paddingBottom: 40 }}
+                showsVerticalScrollIndicator={false}
             >
 
                 {/* CABEÇALHO */}

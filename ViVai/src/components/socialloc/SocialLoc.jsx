@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
 import { SocialLocStyle } from "./SocialLocStyle";
-import { fotosLugares, lugaresIniciais } from "../../services/lugaresData";
+import { fotosLugares, getFotoLugar, lugaresIniciais } from "../../services/lugaresData";
 import { setLocalizacaoParaPublicacao } from "../../services/localizacaoStore";
 
 export const SocialLoc = () => {
@@ -426,8 +426,7 @@ export const SocialLoc = () => {
                         </View>
                     ) : (
                         lugaresLocaisFiltrados.map((item, index) => {
-                            const imgSource =
-                                fotosLugares[item.imagem] || fotosLugares["ibira.jpg"];
+                            const imgSource = getFotoLugar(item.imagem);
 
                             return (
                                 <View key={item.id}>

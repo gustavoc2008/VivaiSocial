@@ -5,10 +5,27 @@ export const fotosLugares = {
     "iguatemi.jpg": require("../../assets/iguatemi.jpg"),
     "povo.jpg": require("../../assets/povo.jpg"),
     "helipa.jpg": require("../../assets/helipa.jpg"),
+    "santos.jpg": require("../../assets/santos.jpg"),
+    "beco.jpg": require("../../assets/beco.jpg"),
     "cafe.jpg": require("../../assets/cafe.jpg"),
-    "sol.jpg": require("../../assets/sol.jpg"),
+    "sol.jpg": require("../../assets/santos.jpg"),
     "cidade.jpg": require("../../assets/cidade.jpg"),
-    "airbnb.jpg": require("../../assets/airbnb.jpg"),
+    "airbnb.jpg": require("../../assets/beco.jpg"),
+};
+
+export const getFotoLugar = (imagem) => {
+    if (!imagem) return fotosLugares["ibira.jpg"];
+    if (
+        typeof imagem === "string" &&
+        (imagem.startsWith("http://") ||
+            imagem.startsWith("https://") ||
+            imagem.startsWith("file://") ||
+            imagem.startsWith("data:") ||
+            imagem.startsWith("blob:"))
+    ) {
+        return { uri: imagem };
+    }
+    return fotosLugares[imagem] || fotosLugares["ibira.jpg"];
 };
 
 export const lugaresIniciais = [
@@ -136,7 +153,7 @@ export const lugaresIniciais = [
         horario: "Acesso livre 24 horas",
         entrada: "Entrada gratuita",
         descricao: "Maior jardim de praia do mundo, com calçadão extenso, ciclovia e clima relaxante à beira-mar.",
-        imagem: "sol.jpg"
+        imagem: "santos.jpg"
     },
     {
         id: 8,
@@ -154,6 +171,6 @@ export const lugaresIniciais = [
         horario: "Aberto diariamente • Recomendado de dia",
         entrada: "Entrada gratuita",
         descricao: "Famosa galeria de arte urbana a céu aberto na Vila Madalena, perfeita para fotos e passeios culturais.",
-        imagem: "airbnb.jpg"
+        imagem: "beco.jpg"
     }
 ];

@@ -18,6 +18,7 @@ import { api } from "../../services/json";
 import { fotosLugares, lugaresIniciais } from "../../services/lugaresData";
 import { useAuth } from "../../context/Context";
 import { criarNotificacaoSeguir } from "../../services/notificacoesService";
+import { obterMapaSeguindo, alternarSeguirUsuario } from "../../services/seguidoresService";
 
 const fotosPerfil = {
     "pessoa.jpeg": require("../../../assets/pessoa.jpeg"),
@@ -70,6 +71,13 @@ export const SocialPesquisa = () => {
             if (resUsers.status === "fulfilled" && Array.isArray(resUsers.value.data)) {
                 setUsuarios(resUsers.value.data);
             }
+
+            try {
+                const mapa = await obterMapaSeguindo(usuarioLogado?.id);
+                setSeguindoMap((prev) => ({ ...prev, ...mapa }));
+            } catch (eMapa) {
+                console.log("Aviso ao carregar mapa de seguindo no Explorar:", eMapa);
+            }
         } catch (error) {
             console.log("Erro ao carregar dados do Explorar:", error);
             setLugares(lugaresIniciais);
@@ -82,7 +90,7 @@ export const SocialPesquisa = () => {
     useFocusEffect(
         useCallback(() => {
             carregarDados();
-        }, [])
+        }, [usuarioLogado?.id])
     );
 
     const onRefresh = () => {
@@ -90,16 +98,17 @@ export const SocialPesquisa = () => {
         carregarDados();
     };
 
-    const alternarSeguir = (id) => {
+    const alternarSeguir = async (id) => {
         const novoSeguindo = !seguindoMap[id];
         setSeguindoMap((prev) => ({
             ...prev,
             [id]: novoSeguindo,
         }));
 
-        if (novoSeguindo) {
-            const userAlvo = usuarios.find((u) => u.id === id);
-            if (userAlvo) {
+        const userAlvo = usuarios.find((u) => u.id === id);
+        if (userAlvo) {
+            await alternarSeguirUsuario(userAlvo, usuarioLogado?.id);
+            if (novoSeguindo) {
                 criarNotificacaoSeguir({
                     usuarioAlvo: userAlvo,
                     usuarioLogado,

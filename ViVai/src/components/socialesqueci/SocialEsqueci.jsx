@@ -103,7 +103,7 @@ export const SocialEsqueci = () => {
 
     return (
 
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#171717" }}>
 
             <ScrollView
                 style={SocialEsqueciStyle.container}

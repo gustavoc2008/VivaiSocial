@@ -4,6 +4,7 @@ import {
     Text,
     TouchableOpacity,
     View,
+    StatusBar,
 } from "react-native";
 
 import { useCallback, useState } from "react";
@@ -24,6 +25,8 @@ import { abrirNoMaps } from "../../services/mapsService";
 import { ModalImagemExpandida } from "../modalimagem/ModalImagemExpandida";
 import { ToastNotificacao } from "../toast/ToastNotificacao";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ModalOpcoesPublicacao } from "../modalopcoes/ModalOpcoesPublicacao";
 
 const fotosPerfil = {
     "pessoa.jpeg": require("../../../assets/pessoa.jpeg"),
@@ -58,13 +61,33 @@ export const SocialInicio = () => {
         submensagem: "",
     });
 
+    // Estado do Modal de Opções da Publicação (Bloquear e Reportar)
+    const [modalOpcoes, setModalOpcoes] = useState({
+        visivel: false,
+        publicacao: null,
+    });
+    const [usuariosBloqueados, setUsuariosBloqueados] = useState([]);
+
     const getDados = async () => {
         try {
-            const respostaPublicacoes = await axios.get(`${API_URL}/publicacoes`);
-            const respostaUsuarios = await axios.get(`${API_URL}/usuarios`);
+            const [respostaPublicacoes, respostaUsuarios, salvosBloqueados] = await Promise.all([
+                axios.get(`${API_URL}/publicacoes`),
+                axios.get(`${API_URL}/usuarios`),
+                AsyncStorage.getItem("@vivai_bloqueados"),
+            ]);
 
-            setPublicacoes(respostaPublicacoes.data);
-            setUsuarios(respostaUsuarios.data);
+            const bloqueados = salvosBloqueados ? JSON.parse(salvosBloqueados) : [];
+            setUsuariosBloqueados(bloqueados);
+
+            // Filtra as publicações removendo contas bloqueadas
+            const publicacoesFiltradas = (respostaPublicacoes.data || []).filter(
+                (item) =>
+                    !bloqueados.includes(item.usuario) &&
+                    !bloqueados.includes(String(item.usuarioId))
+            );
+
+            setPublicacoes(publicacoesFiltradas);
+            setUsuarios(respostaUsuarios.data || []);
         } catch (error) {
             console.log("Erro ao buscar dados:", error);
         }
@@ -176,8 +199,51 @@ export const SocialInicio = () => {
         }
     };
 
+    // Bloquear Conta
+    const handleBloquearConta = async (publi) => {
+        const nomeUsuario = publi.usuario;
+        const idUsuario = publi.usuarioId ? String(publi.usuarioId) : null;
+
+        try {
+            const salvo = (await AsyncStorage.getItem("@vivai_bloqueados")) || "[]";
+            const lista = JSON.parse(salvo);
+            const novaLista = [...new Set([...lista, nomeUsuario, idUsuario].filter(Boolean))];
+
+            await AsyncStorage.setItem("@vivai_bloqueados", JSON.stringify(novaLista));
+            setUsuariosBloqueados(novaLista);
+
+            // Remove imediatamente do feed todas as publicações deste usuário
+            setPublicacoes((prev) =>
+                prev.filter(
+                    (p) => p.usuario !== nomeUsuario && String(p.usuarioId) !== idUsuario
+                )
+            );
+
+            setToast({
+                visivel: true,
+                mensagem: `Conta de ${nomeUsuario} bloqueada 🚫`,
+                submensagem: "Você não verá mais publicações deste perfil no seu feed.",
+            });
+        } catch (erro) {
+            console.log("Erro ao salvar conta bloqueada:", erro);
+        }
+    };
+
+    // Reportar Publicação
+    const handleReportarPublicacao = (publi, motivo) => {
+        // Oculta a publicação reportada do feed do usuário
+        setPublicacoes((prev) => prev.filter((p) => p.id !== publi.id));
+
+        setToast({
+            visivel: true,
+            mensagem: "Publicação reportada com sucesso! 🛡️",
+            submensagem: `Motivo: ${motivo}. Analisaremos este conteúdo.`,
+        });
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#171717" }} edges={["top", "left", "right"]}>
+            <StatusBar barStyle="light-content" backgroundColor="#171717" />
             {/* TOAST DE NOTIFICAÇÃO AO SALVAR */}
             <ToastNotificacao
                 visivel={toast.visivel}
@@ -208,6 +274,15 @@ export const SocialInicio = () => {
                         params: { id },
                     })
                 }
+            />
+
+            {/* MODAL DE OPÇÕES DA PUBLICAÇÃO (BLOQUEAR E REPORTAR) */}
+            <ModalOpcoesPublicacao
+                visivel={modalOpcoes.visivel}
+                publicacao={modalOpcoes.publicacao}
+                onClose={() => setModalOpcoes({ visivel: false, publicacao: null })}
+                onBloquearConta={handleBloquearConta}
+                onReportarPublicacao={handleReportarPublicacao}
             />
 
             {/* ÁREA DE CONTEÚDO PRINCIPAL */}
@@ -277,7 +352,16 @@ export const SocialInicio = () => {
                                         <Text style={SocialInicioStyle.textHora}>{item.tempo}</Text>
                                     </View>
 
-                                    <TouchableOpacity style={SocialInicioStyle.botaoPontos}>
+                                    <TouchableOpacity
+                                        style={SocialInicioStyle.botaoPontos}
+                                        activeOpacity={0.7}
+                                        onPress={() =>
+                                            setModalOpcoes({
+                                                visivel: true,
+                                                publicacao: item,
+                                            })
+                                        }
+                                    >
                                         <Image
                                             source={require("../../../assets/pontos.png")}
                                             style={SocialInicioStyle.iconP}

@@ -1,109 +1,193 @@
-import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  StatusBar,
+  Platform,
+  ActivityIndicator,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import styles from './SeguidoresStyle';
 import { useAuth } from '../../context/Context';
 import { criarNotificacaoSeguir } from '../../services/notificacoesService';
-
-const usuariosIniciais = [
-  { nome: 'Rafaela Souza', user: '@rafa.souza', seguindo: true, cor: '#4d3d35', inicial: 'R' },
-  { nome: 'João Silva', user: '@joao.silva', seguindo: false, cor: '#594b44', inicial: 'J' },
-  { nome: 'Maria Oliveira', user: '@maria.oliveira', seguindo: true, cor: '#4a4b59', inicial: 'M' },
-  { nome: 'Carlos Lima', user: '@carlos.lima', seguindo: false, cor: '#3f4d4a', inicial: 'C' },
-  { nome: 'Ana Paula', user: '@ana.paula', seguindo: false, cor: '#5a3b3b', inicial: 'A' },
-  { nome: 'Lucas Santos', user: '@lucas.santos', seguindo: false, cor: '#4d3a4b', inicial: 'L' },
-  { nome: 'Júlia Fernandes', user: '@julia.fernandes', seguindo: false, cor: '#3d4e58', inicial: 'J' },
-  { nome: 'Bruno Oliveira', user: '@bruno.oliveira', seguindo: false, cor: '#4c423d', inicial: 'B' },
-];
+import {
+  carregarDadosSeguidores,
+  alternarSeguirUsuario,
+} from '../../services/seguidoresService';
 
 export default function Seguidores() {
   const router = useRouter();
+  const params = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
   const { usuarioLogado } = useAuth();
-  const [abaAtiva, setAbaAtiva] = useState('seguidores');
-  const [usuarios, setUsuarios] = useState(usuariosIniciais);
 
+  const [abaAtiva, setAbaAtiva] = useState(
+    params?.aba === 'seguindo' ? 'seguindo' : 'seguidores'
+  );
+  const [dadosSeguidores, setDadosSeguidores] = useState({ seguidores: [], seguindo: [] });
+  const [carregando, setCarregando] = useState(true);
+
+  const carregarListas = async () => {
+    try {
+      const dados = await carregarDadosSeguidores(usuarioLogado?.id);
+      setDadosSeguidores(dados);
+    } catch (e) {
+      console.log('Erro ao carregar listas de seguidores:', e);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      carregarListas();
+    }, [usuarioLogado?.id])
+  );
+
+  useEffect(() => {
+    if (params?.aba === 'seguindo' || params?.aba === 'seguidores') {
+      setAbaAtiva(params.aba);
+    }
+  }, [params?.aba]);
+
+  // Garante que o topo NUNCA colida ou suba para cima da barra de status / entalhe
+  const topPadding = useMemo(() => {
+    if (Platform.OS === 'android') {
+      const statusBarH = StatusBar.currentHeight || 0;
+      return Math.max(insets?.top || 0, statusBarH) + 12;
+    }
+    if (Platform.OS === 'ios') {
+      const iosTop = insets?.top || 0;
+      return (iosTop > 0 ? iosTop : 44) + 8;
+    }
+    return Math.max(insets?.top || 0, 16);
+  }, [insets?.top]);
+
+  const bottomPadding = useMemo(() => {
+    return Math.max(insets?.bottom || 0, Platform.OS === 'android' ? 16 : 24) + 16;
+  }, [insets?.bottom]);
+
+  // A lista exibida reflete exatamente a quantidade de seguidores ou de pessoas seguindo
   const lista = useMemo(() => {
-    return usuarios.filter((usuario) => {
-      if (abaAtiva === 'seguidores') return usuario.seguindo === false;
-      return usuario.seguindo === true;
-    });
-  }, [abaAtiva, usuarios]);
+    if (abaAtiva === 'seguidores') {
+      return dadosSeguidores.seguidores || [];
+    }
+    return dadosSeguidores.seguindo || [];
+  }, [abaAtiva, dadosSeguidores]);
 
-  const alternarSeguir = (nome) => {
-    setUsuarios((atual) =>
-      atual.map((usuario) => {
-        if (usuario.nome === nome) {
-          const novoSeguindo = !usuario.seguindo;
-          if (novoSeguindo) {
-            criarNotificacaoSeguir({
-              usuarioAlvo: usuario,
-              usuarioLogado,
-            });
-          }
-          return { ...usuario, seguindo: novoSeguindo };
+  const alternarSeguir = async (usuario) => {
+    try {
+      const res = await alternarSeguirUsuario(usuario, usuarioLogado?.id);
+      if (res && res.dados) {
+        setDadosSeguidores(res.dados);
+        if (res.estaSeguindo) {
+          criarNotificacaoSeguir({
+            usuarioAlvo: usuario,
+            usuarioLogado,
+          });
         }
-        return usuario;
-      }),
-    );
+      }
+    } catch (error) {
+      console.log('Erro ao alternar seguir:', error);
+    }
   };
 
   return (
     <View style={styles.container}>
-      {/* Header com botão de voltar funcional */}
-      <View style={styles.header}>
-        <Pressable onPress={() => router.back()} hitSlop={10}>
-          <Text style={styles.voltar}>‹</Text>
-        </Pressable>
-        <Text style={styles.titulo}>Seguidores</Text>
-      </View>
+      <StatusBar barStyle="light-content" backgroundColor="#17181b" />
 
-      {/* Abas de navegação interna */}
-      <View style={styles.tabs}>
-        <Pressable
-          style={[styles.tab, abaAtiva === 'seguidores' && styles.tabAtiva]}
-          onPress={() => setAbaAtiva('seguidores')}
-        >
-          <Text style={[styles.tabText, abaAtiva === 'seguidores' && styles.tabTextAtiva]}>
-            Seguidores
-          </Text>
-        </Pressable>
+      <View style={styles.contentWrapper}>
+        {/* Header com botão de voltar funcional e espaçamento seguro superior */}
+        <View style={[styles.header, { paddingTop: topPadding }]}>
+          <Pressable
+            onPress={() => router.back()}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            style={styles.voltarPressable}
+          >
+            <Text style={styles.voltar}>‹</Text>
+          </Pressable>
+          <Text style={styles.titulo}>Seguidores</Text>
+        </View>
 
-        <Pressable
-          style={[styles.tab, abaAtiva === 'seguindo' && styles.tabAtiva]}
-          onPress={() => setAbaAtiva('seguindo')}
-        >
-          <Text style={[styles.tabText, abaAtiva === 'seguindo' && styles.tabTextAtiva]}>
-            Seguindo
-          </Text>
-        </Pressable>
-      </View>
-
-      {/* Lista de usuários */}
-      <ScrollView
-        style={styles.lista}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listaContent}
-      >
-        {lista.map((usuario) => (
-          <View key={`${usuario.nome}-${usuario.user}`} style={styles.item}>
-            <View style={[styles.avatar, { backgroundColor: usuario.cor }]}>
-              <Text style={styles.avatarTexto}>{usuario.inicial}</Text>
-            </View>
-
-            <View style={styles.dados}>
-              <Text style={styles.nome}>{usuario.nome}</Text>
-              <Text style={styles.usuario}>{usuario.user}</Text>
-            </View>
-
-            <Pressable
-              onPress={() => alternarSeguir(usuario.nome)}
-              style={[styles.botao, usuario.seguindo ? styles.botaoSeguindo : styles.botaoSeguir]}
+        {/* Abas de navegação interna */}
+        <View style={styles.tabs}>
+          <Pressable
+            style={[styles.tab, abaAtiva === 'seguidores' && styles.tabAtiva]}
+            onPress={() => setAbaAtiva('seguidores')}
+          >
+            <Text
+              style={[styles.tabText, abaAtiva === 'seguidores' && styles.tabTextAtiva]}
+              numberOfLines={1}
             >
-              <Text style={styles.botaoTexto}>{usuario.seguindo ? 'Seguindo' : 'Seguir'}</Text>
-            </Pressable>
-          </View>
-        ))}
-      </ScrollView>
+              Seguidores
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.tab, abaAtiva === 'seguindo' && styles.tabAtiva]}
+            onPress={() => setAbaAtiva('seguindo')}
+          >
+            <Text
+              style={[styles.tabText, abaAtiva === 'seguindo' && styles.tabTextAtiva]}
+              numberOfLines={1}
+            >
+              Seguindo
+            </Text>
+          </Pressable>
+        </View>
+
+        {/* Lista de usuários sincronizada com a quantidade real */}
+        <ScrollView
+          style={styles.lista}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[styles.listaContent, { paddingBottom: bottomPadding }]}
+        >
+          {carregando ? (
+            <View style={styles.vazioContainer}>
+              <ActivityIndicator size="small" color="#f28b2d" />
+            </View>
+          ) : lista.length === 0 ? (
+            <View style={styles.vazioContainer}>
+              <Text style={styles.vazioTexto}>
+                {abaAtiva === 'seguidores'
+                  ? 'Você ainda não tem seguidores.'
+                  : 'Você ainda não segue ninguém.'}
+              </Text>
+            </View>
+          ) : (
+            lista.map((usuario) => (
+              <View key={`${usuario.id || usuario.nome}-${usuario.user}`} style={styles.item}>
+                <View style={[styles.avatar, { backgroundColor: usuario.cor || '#4a4b59' }]}>
+                  <Text style={styles.avatarTexto}>
+                    {usuario.inicial || (usuario.nome ? usuario.nome.charAt(0).toUpperCase() : 'U')}
+                  </Text>
+                </View>
+
+                <View style={styles.dados}>
+                  <Text style={styles.nome} numberOfLines={1} ellipsizeMode="tail">
+                    {usuario.nome}
+                  </Text>
+                  <Text style={styles.usuario} numberOfLines={1} ellipsizeMode="tail">
+                    {usuario.user}
+                  </Text>
+                </View>
+
+                <Pressable
+                  onPress={() => alternarSeguir(usuario)}
+                  style={[styles.botao, usuario.seguindo ? styles.botaoSeguindo : styles.botaoSeguir]}
+                >
+                  <Text style={styles.botaoTexto} numberOfLines={1}>
+                    {usuario.seguindo ? 'Seguindo' : 'Seguir'}
+                  </Text>
+                </Pressable>
+              </View>
+            ))
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 }

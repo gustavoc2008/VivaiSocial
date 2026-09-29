@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -6,20 +6,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#17181b',
   },
 
+  contentWrapper: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 680,
+    alignSelf: 'center',
+  },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 18,
-    paddingTop: 12,
     paddingBottom: 12,
+  },
+
+  voltarPressable: {
+    paddingRight: 10,
+    paddingVertical: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   voltar: {
     color: '#f3f5f5',
     fontSize: 34,
-    fontWeight: '400',
+    fontWeight: '300',
     lineHeight: 34,
-    marginRight: 12,
+    marginRight: 6,
+    includeFontPadding: false,
   },
 
   titulo: {
@@ -51,7 +65,7 @@ const styles = StyleSheet.create({
 
   tabText: {
     color: '#d9d9d9',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
 
@@ -66,7 +80,7 @@ const styles = StyleSheet.create({
 
   listaContent: {
     paddingHorizontal: 14,
-    paddingBottom: 16,
+    flexGrow: 1,
   },
 
   item: {
@@ -87,6 +101,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.14)',
+    flexShrink: 0,
   },
 
   avatarTexto: {
@@ -98,6 +113,7 @@ const styles = StyleSheet.create({
   dados: {
     flex: 1,
     justifyContent: 'center',
+    marginRight: 10,
   },
 
   nome: {
@@ -119,6 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: 0,
   },
 
   botaoSeguir: {
@@ -133,6 +150,19 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: '700',
+  },
+
+  vazioContainer: {
+    paddingVertical: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+
+  vazioTexto: {
+    color: '#8e9297',
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 
